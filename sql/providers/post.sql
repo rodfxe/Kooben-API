@@ -1,0 +1,29 @@
+insert into nuc_empresas
+(
+	sNombreCorto,
+	eRegimenFiscal,
+	sRazonSocial,
+	sRFC,
+	eTipoEmpresa,
+	iIdPais,
+	iIdEstado,
+	iIdMunicipio,
+	sCiudad,
+	sDomicilio,
+	sCp,
+	mComentarios
+)
+values(
+	:sNombreCorto,
+	:eRegimenFiscal,
+	:sRazonSocial,
+	:sRFC,
+	:eTipoEmpresa,
+	:iIdPais,
+	:iIdEstado,
+	:iIdMunicipio,
+	:sCiudad,
+	:sDomicilio,
+	:sCp,
+	:mComentarios
+);

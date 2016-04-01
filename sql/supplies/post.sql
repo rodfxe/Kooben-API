@@ -1,0 +1,25 @@
+insert into cmt_insumo
+(
+    IdTipoInsumo,
+	CodigoInsumo,
+	NombreInsumo,
+	DescripcionInsumo,
+	iIdUnidad,
+	Calorias,
+	Proteinas,
+	Grasas,
+	HidratosCarbono,
+	IndiceGlucemico
+)
+values(
+    :IdTipoInsumo,
+    :CodigoInsumo,
+    :NombreInsumo,
+    :DescripcionInsumo,
+    :iIdUnidad,
+    :Calorias,
+    :Proteinas,
+    :Grasas,
+    :HidratosCarbono,
+    :IndiceGlucemico
+);

@@ -1,0 +1,20 @@
+insert into cmt_insumoprecio
+(
+	IdInsumo,
+	iIdEmpresa,
+	IdMarca,
+	IdPresentacion,
+	PrecioCompra,
+	PrecioVenta,
+	Aplicacion
+)
+values
+(
+	:IdInsumo,
+	:iIdEmpresa,
+	:IdMarca,
+	:IdPresentacion,
+	:PrecioCompra,
+	:PrecioVenta,
+	:Aplicacion
+);
