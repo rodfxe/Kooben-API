@@ -68,7 +68,6 @@ $app->post( '/shop/estimate', function() use ( $app, $mysql, $kooben ) {
 
 	$response = new KoobenResponse();
 	$response->items = array();
-	$response->searches = [];
 
 	foreach ( $post[ 'items' ] as $item_idx => $item ) {
 		$search = $prices->findBy([
@@ -79,8 +78,6 @@ $app->post( '/shop/estimate', function() use ( $app, $mysql, $kooben ) {
 				'presentation' => new QueryParamItem( $item[ 'presentationId' ] )
 			])
 		]);
-
-		array_push( $response->searches, $search );
 
 		if ( $search->status->found ) {
 			array_push( $response->items, $search->items[0] );
