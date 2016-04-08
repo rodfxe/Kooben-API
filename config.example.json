@@ -1,0 +1,798 @@
+{
+	"config":
+	{
+		"mysql":
+		{
+			"profile": "devSamProduction",
+
+			"devSam":
+			{
+				"host": "localhost",
+				"user": "root",
+				"password": "root",
+				"database": "kooben",
+				"port": 3306
+			}
+		}
+	},
+
+
+
+	"fileSizes" : {
+		"avatar": 500000
+	},
+
+
+
+	"core":
+	{
+		"query": "core/query.php",
+		"model": "core/model.php",
+		"generics": "core/generics.php",
+		"messages": "core/messages.php",
+		"upload": "core/upload.php"
+	},
+
+
+
+
+
+	"routes":
+	{
+		"recipes": "routes/recipes.php",
+		"ingredients": "routes/ingredients.php",
+		"sessions": "routes/sessions.php",
+		"accounts": "routes/auth.php",
+		"supplies": "routes/supplies.php",
+		"measures": "routes/measures.php",
+		"suppliesTypes": "routes/supplies-types.php",
+		"providers": "routes/providers.php",
+		"marks": "routes/marks.php",
+		"presentations": "routes/presentations.php",
+		"countries": "routes/countries.php",
+		"states": "routes/states.php",
+		"cities": "routes/cities.php",
+		"menus": "routes/menus.php",
+		"suppliesPrices": "routes/supplies-prices.php",
+
+		"pricesConsults": "routes/prices-consults.php",
+		"periodConsumption": "routes/periodConsumption.php",
+		"registryConsumption": "routes/registryConsumption.php",
+		"registryConsumptionData": "routes/registryConsumptionData.php",
+		"shop": "routes/shop.php",
+		"addresses": "routes/addresses.php",
+		"purchases": "routes/purchases.php",
+		"purchaseItems": "routes/purchaseItems.php",
+		"shopDeliverers": "routes/shopDeliverers.php"
+	},
+
+
+
+
+	"models":
+	{
+
+
+
+		"recipes": {
+			"IdReceta": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"IdTipoReceta": {
+				"type": "INT"
+			},
+			"CodigoReceta": {
+				"type": "STR"
+			},
+			"NombreReceta": {
+				"type": "STR"
+			},
+			"DescripcionReceta": {
+				"type": "STR"
+			},
+			"PreparacionReceta": {
+				"type": "STR"
+			},
+			"Personas": {
+				"type": "INT"
+			},
+			"Imagen": {
+				"type": "LONGBLOB"
+			},
+			"Tipo": {
+				"type": "ENUM",
+				"values": [
+					"Receta",
+					"Barra"
+				],
+				"default": null
+			},
+			"Activo": {
+				"type": "ENUM",
+				"values": [
+					"Si",
+					"No"
+				],
+				"default": "Si"
+			},
+
+			"__primary_key__": "IdReceta"
+		},
+
+
+
+
+
+		"ingredients": {
+			"IdRecetaPartida": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"IdReceta": {
+				"type": "INT"
+			},
+			"IdInsumo": {
+				"type": "INT"
+			},
+			"iIdUnidad": {
+				"type": "INT"
+			},
+			"Cantidad": {
+				"type": "FLOAT"
+			},
+
+			"__primary_key__": "IdRecetaPartida"
+		},
+
+
+
+
+
+		"sessions":
+		{
+			"id": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"hash": {
+				"type": "STR"
+			},
+			"username": {
+				"type": "STR"
+			},
+
+			"createdAt": {
+				"type": "DATETIME"
+			},
+
+			"application": {
+				"type": "ENUM",
+				"values": [ "web", "windows-desktop", "ios", "android", "windows-phone", "os-x" ],
+				"default": "undefined"
+			},
+
+			"type": {
+				"type": "ENUM",
+				"values": [ "free", "log" ],
+				"default": "free"
+			},
+
+			"userId":{
+				"type": "INT",
+				"optional": true,
+				"allow_null": true
+			},
+
+			"__primary_key__": "id"
+		},
+
+
+
+
+
+		"accounts":
+		{
+			"IdUsuario": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"sIdUsuario": { "type": "STR" },
+			"sPassword": { "type": "STR" },
+			"sNombre": { "type": "STR" },
+			"sMail": { "type": "STR" },
+			"sFacebookToken": { "type": "STR" },
+			"sGoogleToken": { "type": "STR" },
+			"sApellidos": { "type": "STR" },
+			"sTipo": {
+				"type": "ENUM",
+				"values": [ "provider", "user" ],
+				"default": "user"
+			},
+			"sImg": {
+				"type": "STR",
+				"optional": true,
+				"allow_null": true
+			},
+			"Administrador": {
+				"type": "ENUM",
+				"values": [ "Si", "No" ],
+				"default": "No"
+			},
+
+			"__table_name__": "usuarios",
+			"__primary_key__": "IdUsuario"
+		},
+
+
+
+
+
+		"supplies":
+		{
+			"IdInsumo": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"IdTipoInsumo": {
+				"type": "INT"
+			},
+			"CodigoInsumo": {
+				"type": "STR"
+			},
+			"NombreInsumo": {
+				"type": "STR"
+			},
+			"DescripcionInsumo": {
+				"type": "STR"
+			},
+			"iIdUnidad": {
+				"type": "INT"
+			},
+			"Calorias": {
+				"type": "FLOAT"
+			},
+			"Proteinas": {
+				"type": "FLOAT"
+			},
+			"Grasas": {
+				"type": "FLOAT"
+			},
+			"HidratosCarbono": {
+				"type": "FLOAT"
+			},
+			"IndiceGlucemico": {
+				"type": "FLOAT"
+			},
+
+			"__primary_key__": "IdInsumo"
+		},
+
+
+
+
+
+		"measures":
+		{
+			"iIdUnidad": {
+				"type": "INT",
+				"auto_increment": true
+			},
+
+			"sCodigo": {
+				"type": "STR"
+			},
+
+			"sNombre": {
+				"type": "STR"
+			},
+
+			"sSigla": {
+				"type": "STR"
+			},
+
+			"__primary_key__": "iIdUnidad"
+		},
+
+
+
+
+
+		"kardex":
+		{
+			"id": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"rowId": {
+				"type": "INT"
+			},
+			"sessionId": {
+				"type": "INT"
+			},
+			"tableName": {
+				"type": "STR"
+			},
+			"operation": {
+				"type": "ENUM",
+				"values": [ "insert", "update", "delete", "physical-erased" ],
+				"default": null
+			},
+			"affectedAt": {
+				"type": "DATETIME"
+			},
+			"active": {
+				"type": "BOOLEAN",
+				"default": true
+			},
+
+			"__primary_key__": "id"
+		},
+
+
+
+
+
+		"suppliesTypes":
+		{
+			"IdTipoInsumo": {
+				"type": "STR"
+			},
+			"CodigoTipoInsumo": {
+				"type": "STR"
+			},
+			"NombreTipoInsumo": {
+				"type": "STR"
+			},
+			"DescripcionTipoInsumo": {
+				"type": "STR"
+			},
+
+			"__primary_key__": "IdTipoInsumo"
+		},
+
+
+
+
+
+		"providers":
+		{
+			"iIdEmpresa": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"sNombreCorto": {
+				"type": "STR"
+			},
+			"eRegimenFiscal": {
+				"type": "ENUM",
+				"values": [ "Persona Fisica", "Persona Moral" ],
+				"default": "Persona Fisica"
+			},
+			"sRazonSocial": {
+				"type": "STR"
+			},
+			"sRFC": {
+				"type": "STR"
+			},
+			"eTipoEmpresa": {
+				"type": "ENUM",
+				"values": [ "Nacional", "Extranjera" ],
+				"default": "Nacional"
+			},
+			"iIdPais": {
+				"type": "INT"
+			},
+			"iIdEstado": {
+				"type": "INT"
+			},
+			"iIdMunicipio": {
+				"type": "INT"
+			},
+			"sCiudad": {
+				"type": "STR"
+			},
+			"sDomicilio": {
+				"type": "STR"
+			},
+			"sCp": {
+				"type": "STR"
+			},
+			"mComentarios": {
+				"type": "STR",
+				"optional": true
+			},
+			"lat": {
+				"type": "STR",
+				"optional": true,
+				"allow_null": true
+			},
+			"lng": {
+				"type": "STR",
+				"optional": true,
+				"allow_null": true
+			},
+
+
+
+			"__primary_key__": "iIdEmpresa"
+		},
+
+
+
+
+
+		"marks":
+		{
+			"IdMarca": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"CodigoMarca": {
+				"type": "STR"
+			},
+			"TituloMarca": {
+				"type": "STR"
+			},
+
+			"__primary_key__": "IdMarca"
+		},
+
+
+
+
+
+		"presentations":
+		{
+			"IdPresentacion": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"CodigoPresentacion": {
+				"type": "STR"
+			},
+			"TituloPresentacion": {
+				"type": "STR"
+			},
+			"iIdUnidad": {
+				"type": "INT"
+			},
+			"Cantidad": {
+				"type": "FLOAT"
+			},
+
+			"__primary_key__": "IdPresentacion"
+		},
+
+
+
+
+
+		"suppliesPrices":
+		{
+			"IdInsumoPrecio": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"IdInsumo": {
+				"type": "INT"
+			},
+			"iIdEmpresa": {
+				"type": "INT"
+			},
+			"IdMarca": {
+				"type": "INT"
+			},
+			"IdPresentacion": {
+				"type": "INT"
+			},
+			"PrecioCompra": {
+				"type": "FLOAT"
+			},
+			"PrecioVenta": {
+				"type": "FLOAT"
+			},
+			"Aplicacion": {
+				"type": "DATE"
+			},
+
+			"__primary_key__": "IdInsumoPrecio"
+		},
+
+
+
+
+
+		"countries":
+		{
+			"idpais": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"codigopais": {
+				"type": "STR"
+			},
+			"titulopais": {
+				"type": "STR"
+			},
+			"Nacionalidad": {
+				"type": "STR"
+			},
+			"comentario": {
+				"type": "STR"
+			},
+
+			"__primary_key__": "idpais"
+		},
+
+
+
+
+
+
+		"states":
+		{
+			"idestado": {
+				"type": "STR",
+				"auto_increment": true
+			},
+			"idpais": {
+				"type": "STR"
+			},
+			"codigoestado": {
+				"type": "STR"
+			},
+			"tituloestado": {
+				"type": "STR"
+			},
+			"descripcion": {
+				"type": "STR"
+			},
+
+			"__primary_key__": "idestado"
+		},
+
+
+
+
+
+		"cities":
+		{
+			"idciudad":{
+				"type": "STR",
+				"auto_increment": true
+			},
+			"idestado":{
+				"type": "STR"
+			},
+			"codigociudad":{
+				"type": "STR"
+			},
+			"titulociudad":{
+				"type": "STR"
+			},
+			"descripcion":{
+				"type": "STR"
+			},
+
+			"__primary_key__": "idciudad"
+		},
+
+
+
+
+
+		"menus":
+		{
+			"IdMenu":{
+				"type": "INT",
+				"auto_increment": true
+			},
+			"IdEmbarcacion":{
+				"type": "INT",
+				"optional": true
+			},
+			"IdSession": {
+				"type": "INT",
+				"optional": true,
+				"allow_null": true
+			},
+			"CodigoMenu":{
+				"type": "STR"
+			},
+			"Comentarios":{
+				"type": "STR",
+				"optional": true,
+				"allow_null": true
+			},
+			"Desde":{
+				"type": "DATE"
+			},
+			"Hasta":{
+				"type": "DATE"
+			},
+			"Estado":{
+				"type": "ENUM",
+				"values": [ "Activo", "Autorizado" ],
+				"default": "Activo"
+			},
+
+			"__primary_key__": "IdMenu",
+			"__table_name__": "cmt_menu"
+		},
+
+
+
+
+
+
+		"periodConsumption":
+		{
+			"IdPeriodoConsumo": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"TituloPeriodoConsumo": {
+				"type": "STR"
+			},
+			"DescripcionPeriodoConsumo": {
+				"type": "STR"
+			},
+			"Desde": {
+				"type": "DATE"
+			},
+			"Hasta": {
+				"type": "DATE",
+				"optional": true
+			},
+
+			"__table_name__": "cmt_periodoconsumo",
+			"__primary_key__": "IdPeriodoConsumo"
+		},
+
+
+		"registryConsumption":
+		{
+			"IdRegistroConsumo": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"IdMenu": {
+				"type": "INT"
+			},
+			"Fecha": {
+				"type": "DATE"
+			},
+			"Personas": {
+				"type": "INT"
+			},
+			"Estado": {
+				"type": "ENUM",
+				"values": [ "ABIERTO", "CERRADO", "AUTORIZADO" ],
+				"default": "ABIERTO",
+				"optional": true
+			},
+
+			"__table_name__": "cmt_registroconsumo",
+			"__primary_key__": "IdRegistroConsumo"
+		},
+
+
+
+
+
+		"registryConsumptionData":
+		{
+			"IdRegistroConsumoDatos": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"IdPeriodoConsumo": {
+				"type": "INT"
+			},
+			"IdRegistroConsumo": {
+				"type": "INT"
+			},
+			"IdReceta": {
+				"type": "INT"
+			},
+
+			"__table_name__": "cmt_registroconsumodatos",
+			"__primary_key__": "IdRegistroConsumoDatos"
+		},
+
+
+		"addresses": {
+			"id": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"userId": { "type": "INT" },
+			"countryId": { "type": "INT" },
+			"fullname": { "type": "STR" },
+			"street": { "type": "STR" },
+			"number": {
+				"type": "STR",
+				"optional": true,
+				"allow_null": true
+			},
+			"state": { "type": "STR" },
+			"city": { "type": "STR" },
+			"code": { "type": "INT" },
+			"notes": { "type": "STR" },
+
+			"__table_name__": "shop_user_addresses",
+			"__primary_key__": "id"
+		},
+
+
+		"purchases": {
+			"id": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"delivererId": { "type": "INT" },
+			"addressId": { "type": "INT" },
+			"beginDate": {
+				"type": "DATETIME",
+				"optional": true
+			},
+			"deliveredDate": {
+				"type": "DATETIME",
+				"optional": true,
+				"allow_null": true
+			},
+			"delivered": {
+				"type": "INT",
+				"optional": true,
+				"default": 0
+			},
+
+			"__primary_key__": "id",
+			"__table_name__": "shop_purchases"
+		},
+
+
+
+		"purchasesItems": {
+			"id": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"purchaseId": { "type": "INT" },
+			"productId": { "type": "INT" },
+			"cant": { "type": "FLOAT" },
+
+			"__primary_key__": "id",
+			"__table_name__": "shop_purchases_items"
+		},
+
+		"shopDeliverers": {
+			"id": { "type": "INT" },
+			"firstname": { "type": "STR" },
+			"lastname": { "type": "STR" },
+			"email": { "type": "STR" },
+			"password": { "type": "STR" },
+			"free": {
+				"type": "INT",
+				"optional": true
+			},
+
+			"__primary_key__": "id",
+			"__table_name__": "shop_deliverers"
+		},
+
+		"suppliesMarks": {
+			"IdMarcaxInsumo": {
+				"type": "INT",
+				"auto_increment": true
+			},
+
+			"IdInsumo": { "type": "INT"},
+			"IdMarca": { "type": "INT"},
+
+			"__primary_key__": "IdMarcaxInsumo",
+			"__table_name__": "cmt_marcaxinsumo"
+		}
+	}
+}

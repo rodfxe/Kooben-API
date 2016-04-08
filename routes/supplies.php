@@ -13,6 +13,16 @@ $app->get( '/supplies', function() use( $mysql, $kooben ){
 	echo $supplies->findAll()->toJson();
 });
 
+
+# get al supplies for upload image
+$app->get( '/supplies-for-upload', function() use( $mysql, $kooben ){
+	$supplies = new Model( 'supplies', $mysql );
+	$supplies->setProperties( $kooben->models->supplies );
+	$supplies->useQuery( 'get-for-upload' );
+
+	echo $supplies->findAll()->toJson();
+});
+
 # get supplies minified
 $app->get( '/supplies/light', function() use( $mysql, $kooben ){
 	$supplies = new Model( 'supplies', $mysql );
