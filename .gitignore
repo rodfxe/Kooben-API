@@ -1,7 +1,6 @@
 .phpintel/
 docs/kooben.server.txt
-
+config.json
 
 .DS_Store
 .htaccess
-config.json
