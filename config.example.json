@@ -8,9 +8,9 @@
 			"devSam":
 			{
 				"host": "localhost",
-				"user": "root",
-				"password": "root",
-				"database": "kooben",
+				"user": "user",
+				"password": "secret",
+				"database": "database",
 				"port": 3306
 			}
 		}
