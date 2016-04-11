@@ -129,4 +129,22 @@ $app->get( '/supplies/:supplyid/presentations', function( $supplyid ) use( $mysq
 });
 
 
+$app->post( '/supplies/:id/image', function( $id ) use ( $mysql, $kooben ) {
+	$image = new Upload( $_FILES[ 'file' ], [
+        'rules' => [ 'image/jpeg', 'image/jpg' ],
+        'maxSize' => $kooben->fileSizes->avatar
+    ] );
+
+    $response = new KoobenResponse();
+    $response->status = $image->getResume();
+    if ( $response->status[ 'isValid' ] ) {
+        $filename = "supply_$id";
+        $response->status[ 'saved' ] = $image->save( $filename );
+    }
+
+    echo $response->toJson();
+});
+
+
+
 ?>

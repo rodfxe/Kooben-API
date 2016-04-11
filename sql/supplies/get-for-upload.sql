@@ -2,4 +2,7 @@ select
 	supply.IdInsumo as id,
 	supply.NombreInsumo as name
 
-from cmt_insumo as supply;
+from cmt_insumo as supply
+
+order by
+	supply.IdInsumo;

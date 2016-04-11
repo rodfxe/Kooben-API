@@ -96,4 +96,23 @@ $app->delete( '/presentations/:id', function($id) use($app, $mysql, $kooben){
 
 
 
+
+$app->post( '/presentations/:supply/:mark/:presentation/image', function( $supply, $mark, $presentation ) use( $app, $mysql, $kooben ) {
+    $image = new Upload( $_FILES[ 'file' ], [
+        'rules' => [ 'image/jpeg', 'image/jpg' ],
+        'maxSize' => $kooben->fileSizes->avatar
+    ] );
+
+    $response = new KoobenResponse();
+    $response->status = $image->getResume();
+    if ( $response->status[ 'isValid' ] ) {
+        $filename = "presentation_$supply"."_$mark"."_$presentation";
+        $response->status[ 'saved' ] = $image->save( $filename );
+    }
+
+    echo $response->toJson();
+});
+
+
+
 ?>

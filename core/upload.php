@@ -49,11 +49,17 @@ class Upload
 
 	public function save( $name )
 	{
+		global $kooben;
+
 		$name = ( "$name.$this->extension" );
-		$newPath = ( '../Storage/' . $name );
+		$newPath = ( $kooben->uploadFolder . $name );
 		$this->saved = ( move_uploaded_file( $this->tempName, $newPath ) === TRUE );
 		if ( $this->saved ) { $this->name = $name; }
 		return $this->saved;
+	}
+
+	public function saveAs( $name ) {
+		return $this->save( $name );
 	}
 }
 
