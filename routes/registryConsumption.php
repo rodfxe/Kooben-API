@@ -15,7 +15,6 @@ $app->get( '/registry-consumption/:dayId', function( $dayId ) use ( $mysql, $koo
 
 
 
-
 $app->put( '/registry-consumption/:dayId', function( $dayId ) use( $app, $mysql, $kooben ){
 	$session = checkKoobenSession( $app );
 	if ( !$session->status->found ){

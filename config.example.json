@@ -22,8 +22,7 @@
 		"avatar": 500000
 	},
 
-
-	"uploadFolder": "../Kooben-Resources/Storage/",
+	"uploadFolder": "../Resources/Storage/",
 
 
 
@@ -66,7 +65,8 @@
 		"addresses": "routes/addresses.php",
 		"purchases": "routes/purchases.php",
 		"purchaseItems": "routes/purchaseItems.php",
-		"shopDeliverers": "routes/shopDeliverers.php"
+		"shopDeliverers": "routes/shopDeliverers.php",
+		"planeaciones": "routes/planeaciones.php"
 	},
 
 
@@ -120,7 +120,8 @@
 				"default": "Si"
 			},
 
-			"__primary_key__": "IdReceta"
+			"__primary_key__": "IdReceta",
+			"__table_name__": "cmt_receta"
 		},
 
 
@@ -796,6 +797,78 @@
 
 			"__primary_key__": "IdMarcaxInsumo",
 			"__table_name__": "cmt_marcaxinsumo"
+		},
+
+		"planeaciones": {
+			"id": {
+				"type": "INT",
+				"auto_increment": true
+			},
+			"idUsuario": {
+				"type": "INT"
+			},
+			"titulo": {
+				"type": "STR"
+			},
+			"desde": {
+				"type": "STR"
+			},
+			"hasta": {
+				"type": "STR"
+			},
+			"activo": {
+				"type": "INT",
+				"optional": true,
+				"default": 1
+			},
+
+			"__primary_key__": "id",
+			"__table_name__": "cmt_planeacion"
+		},
+
+
+
+		"planeacionDias": {
+			"id": {
+				"type": "INT",
+				"auto_increment": true
+			},
+
+			"fecha": {
+				"type": "DATE"
+			},
+
+			"personas": {
+				"type": "INT"
+			},
+
+			"__primary_key__": "id",
+			"__table_name__": "cmt_planeaciondias"
+		},
+
+
+		"planeacionRecetas": {
+			"id": {
+				"type": "INT",
+				"auto_increment": true
+			},
+
+			"diaId": {
+				"type": "INT"
+			},
+
+			"recetaId": {
+				"type": "INT"
+			},
+
+			"periodo": {
+				"type": "INT"
+			},
+
+			"__primary_key__": "id",
+			"__table_name__": "cmt_planeacionrecetas"
 		}
+
+
 	}
 }

@@ -273,7 +273,12 @@ class Request
                 return $default;
             }
         } else {
-            return $this->env['slim.request.form_hash'];
+            $contentType = strtolower( $this->headers->get( 'Content-Type' ) );
+            if ( $contentType == 'application/json' || $contentType == 'application/json;charset=utf-8' ) {
+                return json_decode( $this->getBody(), true );
+            } else {
+                return $this->env['slim.request.form_hash'];
+            }
         }
     }
 

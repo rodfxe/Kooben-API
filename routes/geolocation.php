@@ -1,5 +1,4 @@
 <?php
- header("Access-Control-Allow-Origin: *");
 /**
 * Consults for prices routes for Kooben
 * 

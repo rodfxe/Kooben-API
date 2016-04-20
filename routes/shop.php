@@ -7,6 +7,7 @@
 
 $app->get( '/shop/product-list/:latitude/:longitude/:range/:unit', function( $lat, $lon, $range, $unit ) use( $mysql, $kooben ) {
 	$me = [ 'lat' => $lat, 'lon' => $lon ];
+	$range = floatval( $range );
 
 	$providers = new Model( 'providers', $mysql );
 	$providers->setProperties( $kooben->models->providers );
@@ -37,6 +38,7 @@ $app->get( '/shop/product-list/:latitude/:longitude/:range/:unit', function( $la
 	}
 
 	$result->status = new GetModelStatus( ( count( $sqlList ) > 0 ), true );
+	$result->providers = $items;
 
 	if ( $result->status->found ) {
 

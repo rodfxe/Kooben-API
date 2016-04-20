@@ -58,6 +58,16 @@ set
 	mComentarios = if( :mComentarios = '-1',
 		mComentarios,
 		:mComentarios
+	),
+
+	lat = if( :lat = '-1',
+		lat,
+		:lat
+	),
+
+	lng = if( :lng = '-1',
+		lng,
+		:lng
 	)
 
 where

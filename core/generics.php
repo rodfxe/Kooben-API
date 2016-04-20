@@ -34,6 +34,18 @@ function createEmptyModelWithStatus( $statusname, $message = empty_str ){
 }
 
 
+function createSessionInvalidResponse( $statusname ) {
+	$session = createEmptyModelWithStatus( $statusname );
+	$session->status->sessionInvalid = true;
+	return $session;
+}
+
+
+function getSessionIdFrom( $application ) {
+	return $application->request->headers->get( 'KOOBEN-SESSION-ID' );
+}
+
+
 # create session
 function createLogSession( $userId, $username, $application ) {
 	global $sessions;
@@ -115,9 +127,7 @@ function getDistanceBetweenTwoLocations( $from, $to, $unit ) {
 		cos( deg2rad( $dlon ) )
 	) * $radius );
 
-	if ( $unit == 'MTS' ) {
-		return ( $distance / 1000 );
-	} else if ( $unit == 'K') {
+	if ( $unit == 'K') {
 		return ( $distance );
 	} else if ($unit == 'M') {
 		return ( $distance * 0.621371192 );

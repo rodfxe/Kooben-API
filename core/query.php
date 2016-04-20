@@ -165,6 +165,13 @@
 
 
 
+        public function refreshParams() {
+            $this->setParams();
+        }
+
+
+
+
 
         public function lastId()
         {

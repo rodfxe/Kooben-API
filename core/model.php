@@ -406,6 +406,8 @@
 		# create a new record un the database
 		public function create()
 		{
+			global $kooben;
+
 			$allOk = $this->validate();
 			$model = $this->createModelItem();
 			$model->status = new PostModelStatus();
@@ -421,7 +423,9 @@
 				$this->query->setSql( $sql );
 				$this->setQueryValues();
 				$this->query->execQuery();
-				#$sql = $this->getQuery();
+				if ( $kooben->config->mysql->profile != 'production' ) {
+					$sql = $this->getQuery();
+				}
 
 				if( $this->query->hasError ){ $this->error = $this->query->errorMessage; }
 
@@ -431,7 +435,9 @@
 				$model->status = new PostModelStatus();
 				$model->status->valid = $allOk;
 				$model->status->created = ( $id > 0 );
-				#$model->sql = $sql;
+				if ( $kooben->config->mysql->profile != 'production' ) {
+					$model->dev = $sql;
+				}
 			} else {
 				$model->error = 'Valores incorrectos';
 				$model->fieldError = $this->fieldError;
@@ -495,9 +501,11 @@
 			if ( $query->affectedRows > 0 ){
 				$result->status->created = true;
 
-				$query->clear();
+				$query = new Query( $this->connection );
 				$query->setSql( $this->getContentFromSQLFile( $this->getSQLPath() . $Options['getQueryName'] ) );
 				$query->params = $Options['getQueryParams'];
+				$query->refreshParams();
+				if ( $Options['devMode'] ){ $getQuery = $query->getQuery(false); }
 				$query->execQuery();
 				if ( $query->recordCount > 0 ){
 					$result->items = $query->rows;
@@ -506,7 +514,8 @@
 
 			if ( $Options['devMode'] ){
 				$result->dev = array(
-					'sql' => $sql
+					'sql' => $sql,
+					'get' => $getQuery
 				);
 			}
 

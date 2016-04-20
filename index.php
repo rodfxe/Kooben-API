@@ -67,94 +67,100 @@ $app->get( '/', function(){
 });
 
 
-# Routes for recipes #
+# Rutas para recipes
 include $kooben->routes->recipes;
 
 
-# Routes for recipes #
+# Rutas para recipes
 include $kooben->routes->ingredients;
 
 
-# Routes for sessions #
+# Rutas para sessions
 include $kooben->routes->sessions;
 
 
-# Routes for accounts #
+# Rutas para accounts
 include $kooben->routes->accounts;
 
 
-# Routes for supplies #
+# Rutas para supplies
 include $kooben->routes->supplies;
 
 
-# Routes for measures #
+# Rutas para measures
 include $kooben->routes->measures;
 
 
-# Routes for supplies types #
+# Rutas para supplies types
 include $kooben->routes->suppliesTypes;
 
 
-# Routes for providers #
+# Rutas para providers
 include $kooben->routes->providers;
 
 
-# Routes for marks #
+# Rutas para marks
 include $kooben->routes->marks;
 
 
-# Routes for contries #
+# Rutas para contries
 include $kooben->routes->countries;
 
 
-# Routes for states #
+# Rutas para states
 include $kooben->routes->states;
 
 
-# Routes for states #
+# Rutas para states
 include $kooben->routes->cities;
 
 
-# Routes for states #
+# Rutas para states
 include $kooben->routes->menus;
 
 
-# Routes for presentations #
+# Rutas para presentations
 include $kooben->routes->presentations;
 
 
-# Routes for prices of supplies #
+# Rutas para prices of supplies
 include $kooben->routes->suppliesPrices;
 
 
-# Routes for consults of prices #
+# Rutas para consults of prices
 include $kooben->routes->pricesConsults;
 
 
-# Routes for period consumption #
+# Rutas para period consumption
 include $kooben->routes->periodConsumption;
 
 
-# Routes for registry consumption #
+# Rutas para registry consumption
 include $kooben->routes->registryConsumption;
 
 
-# Routes for registry consumption data #
+# Rutas para registry consumption data
 include $kooben->routes->registryConsumptionData;
 
 
-# Routes for shoping list #
+# Rutas para shoping list
 include $kooben->routes->shop;
 
 
-# Routes for user addresses #
+# Rutas para user addresses
 include $kooben->routes->addresses;
 
+
+# Rutas para pleneacion
 include $kooben->routes->purchases;
 
-#include $kooben->routes->purchasesItems;
 
+# Rutas para Shop Deliverers
 include $kooben->routes->shopDeliverers;
+
+
+# Rutas para planeaciones
+include $kooben->routes->planeaciones;
 
 
 # Run the Slim application

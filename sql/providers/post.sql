@@ -11,7 +11,9 @@ insert into nuc_empresas
 	sCiudad,
 	sDomicilio,
 	sCp,
-	mComentarios
+	mComentarios,
+	lat,
+	lng
 )
 values(
 	:sNombreCorto,
@@ -25,5 +27,7 @@ values(
 	:sCiudad,
 	:sDomicilio,
 	:sCp,
-	:mComentarios
+	:mComentarios,
+	:lat,
+	:lng
 );
