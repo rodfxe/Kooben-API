@@ -1,0 +1,19 @@
+{
+    "idciudad": {
+        "type": "STR",
+        "auto_increment": true
+    },
+    "idestado": {
+        "type": "STR"
+    },
+    "codigociudad": {
+        "type": "STR"
+    },
+    "titulociudad": {
+        "type": "STR"
+    },
+    "descripcion": {
+        "type": "STR"
+    },
+    "__primary_key__": "idciudad"
+}

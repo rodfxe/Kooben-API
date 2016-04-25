@@ -1,0 +1,50 @@
+{
+    "IdUsuario": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "sIdUsuario": {
+        "type": "STR"
+    },
+    "sPassword": {
+        "type": "STR"
+    },
+    "sNombre": {
+        "type": "STR"
+    },
+    "sMail": {
+        "type": "STR"
+    },
+    "sFacebookToken": {
+        "type": "STR"
+    },
+    "sGoogleToken": {
+        "type": "STR"
+    },
+    "sApellidos": {
+        "type": "STR"
+    },
+    "sTipo": {
+        "type": "ENUM",
+        "values": [
+            "provider",
+            "user"
+        ],
+        "default": "user"
+    },
+    "sImg": {
+        "type": "STR",
+        "optional": true,
+        "allow_null": true
+    },
+    "Administrador": {
+        "type": "ENUM",
+        "values": [
+            "Si",
+            "No"
+        ],
+        "default": "No"
+    },
+    "__table_name__": "usuarios",
+    "__primary_key__": "IdUsuario"
+}

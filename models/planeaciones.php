@@ -156,4 +156,12 @@ class Planeacion extends Model
 
         return $resumen;
     }
+
+
+
+
+
+    public static function cotizacionV1( $planeacionId ) {
+        
+    }
 }

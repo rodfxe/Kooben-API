@@ -1,0 +1,14 @@
+{
+    "IdMarcaxInsumo": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "IdInsumo": {
+        "type": "INT"
+    },
+    "IdMarca": {
+        "type": "INT"
+    },
+    "__primary_key__": "IdMarcaxInsumo",
+    "__table_name__": "cmt_marcaxinsumo"
+}

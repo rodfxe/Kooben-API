@@ -1,0 +1,16 @@
+{
+    "iIdUnidad": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "sCodigo": {
+        "type": "STR"
+    },
+    "sNombre": {
+        "type": "STR"
+    },
+    "sSigla": {
+        "type": "STR"
+    },
+    "__primary_key__": "iIdUnidad"
+}

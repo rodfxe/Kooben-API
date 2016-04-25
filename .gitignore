@@ -6,6 +6,4 @@ config.json
 
 .DS_Store
 .htaccess
-
-definitions/*.json
 makeFromConfig.js

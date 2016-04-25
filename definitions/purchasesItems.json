@@ -1,0 +1,17 @@
+{
+    "id": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "purchaseId": {
+        "type": "INT"
+    },
+    "productId": {
+        "type": "INT"
+    },
+    "cant": {
+        "type": "FLOAT"
+    },
+    "__primary_key__": "id",
+    "__table_name__": "shop_purchases_items"
+}

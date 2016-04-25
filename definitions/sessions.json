@@ -1,0 +1,41 @@
+{
+    "id": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "hash": {
+        "type": "STR"
+    },
+    "username": {
+        "type": "STR"
+    },
+    "createdAt": {
+        "type": "DATETIME"
+    },
+    "application": {
+        "type": "ENUM",
+        "values": [
+            "web",
+            "windows-desktop",
+            "ios",
+            "android",
+            "windows-phone",
+            "os-x"
+        ],
+        "default": "undefined"
+    },
+    "type": {
+        "type": "ENUM",
+        "values": [
+            "free",
+            "log"
+        ],
+        "default": "free"
+    },
+    "userId": {
+        "type": "INT",
+        "optional": true,
+        "allow_null": true
+    },
+    "__primary_key__": "id"
+}

@@ -3,7 +3,7 @@
 	const MODEL_ITEM_STR = 1;
 	const MODEL_ITEM_ENUM = 2;
 	const MODEL_ITEM_DATE = 3;
-	const MODEL_SQL_PATH = 'sql/';
+	const MODEL_SQL_PATH = 'queries/';
 
 	const RETURN_JSON = true;
 	const RETURN_DATA = false;

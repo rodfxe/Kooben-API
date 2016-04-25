@@ -1,0 +1,45 @@
+{
+    "IdReceta": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "IdTipoReceta": {
+        "type": "INT"
+    },
+    "CodigoReceta": {
+        "type": "STR"
+    },
+    "NombreReceta": {
+        "type": "STR"
+    },
+    "DescripcionReceta": {
+        "type": "STR"
+    },
+    "PreparacionReceta": {
+        "type": "STR"
+    },
+    "Personas": {
+        "type": "INT"
+    },
+    "Imagen": {
+        "type": "LONGBLOB"
+    },
+    "Tipo": {
+        "type": "ENUM",
+        "values": [
+            "Receta",
+            "Barra"
+        ],
+        "default": null
+    },
+    "Activo": {
+        "type": "ENUM",
+        "values": [
+            "Si",
+            "No"
+        ],
+        "default": "Si"
+    },
+    "__primary_key__": "IdReceta",
+    "__table_name__": "cmt_receta"
+}

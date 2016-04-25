@@ -1,0 +1,64 @@
+{
+    "iIdEmpresa": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "sNombreCorto": {
+        "type": "STR"
+    },
+    "eRegimenFiscal": {
+        "type": "ENUM",
+        "values": [
+            "Persona Fisica",
+            "Persona Moral"
+        ],
+        "default": "Persona Fisica"
+    },
+    "sRazonSocial": {
+        "type": "STR"
+    },
+    "sRFC": {
+        "type": "STR"
+    },
+    "eTipoEmpresa": {
+        "type": "ENUM",
+        "values": [
+            "Nacional",
+            "Extranjera"
+        ],
+        "default": "Nacional"
+    },
+    "iIdPais": {
+        "type": "INT"
+    },
+    "iIdEstado": {
+        "type": "INT"
+    },
+    "iIdMunicipio": {
+        "type": "INT"
+    },
+    "sCiudad": {
+        "type": "STR"
+    },
+    "sDomicilio": {
+        "type": "STR"
+    },
+    "sCp": {
+        "type": "STR"
+    },
+    "mComentarios": {
+        "type": "STR",
+        "optional": true
+    },
+    "lat": {
+        "type": "STR",
+        "optional": true,
+        "allow_null": true
+    },
+    "lng": {
+        "type": "STR",
+        "optional": true,
+        "allow_null": true
+    },
+    "__primary_key__": "iIdEmpresa"
+}

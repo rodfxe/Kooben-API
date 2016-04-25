@@ -1,0 +1,28 @@
+{
+    "id": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "delivererId": {
+        "type": "INT"
+    },
+    "addressId": {
+        "type": "INT"
+    },
+    "beginDate": {
+        "type": "DATETIME",
+        "optional": true
+    },
+    "deliveredDate": {
+        "type": "DATETIME",
+        "optional": true,
+        "allow_null": true
+    },
+    "delivered": {
+        "type": "INT",
+        "optional": true,
+        "default": 0
+    },
+    "__primary_key__": "id",
+    "__table_name__": "shop_purchases"
+}

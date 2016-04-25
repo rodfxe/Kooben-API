@@ -1,0 +1,19 @@
+{
+    "IdRecetaPartida": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "IdReceta": {
+        "type": "INT"
+    },
+    "IdInsumo": {
+        "type": "INT"
+    },
+    "iIdUnidad": {
+        "type": "INT"
+    },
+    "Cantidad": {
+        "type": "FLOAT"
+    },
+    "__primary_key__": "IdRecetaPartida"
+}

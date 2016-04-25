@@ -1,8 +1,8 @@
 {
 	"config": {
 		"mysql": {
-			"profile": "profile",
-			"profile": {
+			"profile": "myProfile",
+			"myProfile": {
 				"host": "host",
 				"user": "user",
 				"password": "secret",
@@ -11,7 +11,9 @@
 			}
 		}
 	},
-	"fileSizes": { "avatar": 500000 },
+	"fileSizes": {
+		"avatar": 500000
+	},
 	"uploadFolder": "../Kooben-Resources/Storage/",
 	"core": {
 		"query": "core/query.php",
