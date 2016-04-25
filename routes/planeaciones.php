@@ -42,25 +42,27 @@ $app->get( '/planeaciones', function() use ( $app ) {
 $app->get( '/planeaciones/:planeacion', function( $id ) use ( $app ) {
 	$planeaciones = new Planeacion();
 	$planeacion = $planeaciones->findById( '__default__', $id );
-
 	if ( !$planeacion->status->found ) { echo createEmptyModelWithStatus('Get')->toJson(); return; }
 
-	$dias = new PlaneacionDias();
-	$planeaciones->dias = $dias->findBy([
-		'params' => new QueryParams([
-			'planeacion' => new QueryParamItem( $id )
-		])
-	]);
-
-	$recetas = new PlaneacionRecetas();
-	$planeacion->recetas = $recetas->findBy([
-		'queryName' => 'get-with-detail',
-		'params' => new QueryParams([
-			'planeacion' => new QueryParamItem( $id )
-		])
-	]);
+	$planeaciones->dias = Planeacion::obtenerDias( $id );
+	$planeacion->recetas = Planeacion::obtenerRecetas( $id );
 
 	echo $planeacion->toJson();
+});
+
+
+
+
+
+/**
+* Resumen de una planeación
+*
+* @param Int $planeacion Id de la planeación a buscar.
+* @return KoobenResponse Planeación con días y recetas.
+* @author Martin Samuel Esteban Diaz <edmsamuel>
+*/
+$app->get( '/planeaciones/:planeacion/resumen', function( $planeacionId ) {
+    echo Planeacion::obtenerResumen( $planeacionId )->toJson();
 });
 
 

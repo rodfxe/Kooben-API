@@ -1,12 +1,9 @@
 <?php
 /**
-* API for Kooben
+* API para Kooben
 *
-* Started at 2015-10-10 - 21:00:00 hrs
-* Created by Martin Samuel Esteban Diaz
-*
-* Load the Slim Micro-Framework
-* for use in the project
+* Iniciado el 2015-10-10 : 21:00:00 hrs
+* @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 
 
@@ -17,7 +14,7 @@ $kooben = json_decode( file_get_contents( 'config.json' ) );
 include $kooben->core->query;
 include $kooben->core->model;
 
-require 'Slim/Slim.php';
+require $kooben->core->slim;
 \Slim\Slim::registerAutoloader();
 
 

@@ -1,4 +1,5 @@
-.phpintel/
+.phpintel
+.idea
 docs/kooben.server.txt
 config.json
 
