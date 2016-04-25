@@ -1,8 +1,8 @@
 <?php
 /**
-* Presentations routes for Kooben
+* Rutas para presentaciones
 *
-* Created - Martin Samuel Esteban Diaz
+* @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 
 

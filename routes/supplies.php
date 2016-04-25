@@ -1,8 +1,8 @@
 <?php
 /**
-* Supplie routes for Kooben
+* Rutas para suministros
 *
-* Created - Martin Samuel Esteban Diaz
+* @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 
 # get al supplies

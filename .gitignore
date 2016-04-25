@@ -6,3 +6,6 @@ config.json
 
 .DS_Store
 .htaccess
+
+definitions/*.json
+definitions/*.js
