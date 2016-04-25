@@ -8,4 +8,4 @@ config.json
 .htaccess
 
 definitions/*.json
-definitions/*.js
+makeFromConfig.js
