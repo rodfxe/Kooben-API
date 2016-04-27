@@ -1,0 +1,25 @@
+{
+    "id": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "idUsuario": {
+        "type": "INT"
+    },
+    "titulo": {
+        "type": "STR"
+    },
+    "desde": {
+        "type": "STR"
+    },
+    "hasta": {
+        "type": "STR"
+    },
+    "activo": {
+        "type": "INT",
+        "optional": true,
+        "default": 1
+    },
+    "__primary_key__": "id",
+    "__table_name__": "cmt_planeacion"
+}

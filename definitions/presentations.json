@@ -1,0 +1,19 @@
+{
+    "IdPresentacion": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "CodigoPresentacion": {
+        "type": "STR"
+    },
+    "TituloPresentacion": {
+        "type": "STR"
+    },
+    "iIdUnidad": {
+        "type": "INT"
+    },
+    "Cantidad": {
+        "type": "FLOAT"
+    },
+    "__primary_key__": "IdPresentacion"
+}

@@ -1,0 +1,23 @@
+{
+    "id": {
+        "type": "INT"
+    },
+    "firstname": {
+        "type": "STR"
+    },
+    "lastname": {
+        "type": "STR"
+    },
+    "email": {
+        "type": "STR"
+    },
+    "password": {
+        "type": "STR"
+    },
+    "free": {
+        "type": "INT",
+        "optional": true
+    },
+    "__primary_key__": "id",
+    "__table_name__": "shop_deliverers"
+}

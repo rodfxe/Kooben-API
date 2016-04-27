@@ -1,7 +1,9 @@
 .phpintel
 .idea
+kooben-web.sql
 docs/kooben.server.txt
 config.json
 
 .DS_Store
 .htaccess
+makeFromConfig.js

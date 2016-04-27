@@ -144,16 +144,42 @@ class Planeacion extends Model
                         $founded = true;
                         array_push( $resumen->suministros->items[ $suministro_idx ][ 'cantidades' ], [
                             'val' => $cantidad[ 'cantidadSuministro' ],
-                            'unidad' => $cantidad[ 'nombreUnidad' ]
+                            'unidad' => $cantidad[ 'nombreUnidad' ],
+                            'importe' => floatval( $cantidad[ 'importe' ] ),
                         ] ); break;
                     }
                 }
 
-                if ( !$founded ){ array_push( $resumen->suministros->items[ $suministro_idx ][ 'cantidades' ], empty_str ); }
+                if ( !$founded ){ array_push( $resumen->suministros->items[ $suministro_idx ][ 'cantidades' ], [
+                    'val' => empty_str,
+                    'unidad' => empty_str,
+                    'importe' => 0.0
+                ] ); }
 
             }
         }
 
+        return $resumen;
+    }
+
+
+    /**
+     * Cotización creada con base a la presentación de menor precio
+     *
+     * @param $planeacionId
+     * @return KoobenResponse
+     */
+    public static function cotizacionV1($planeacionId ) {
+        global $mysql;
+
+        $resumen = self::obtenerResumen( $planeacionId );
+        foreach ( $resumen->suministros->items as $suministro_idx => $suministro ) {
+            $resumen->suministros->items[ $suministro_idx ][ 'importeTotal' ] = 0;
+
+            foreach ( $suministro[ 'cantidades' ] as $cantidad_idx => $cantidad ) {
+                $resumen->suministros->items[ $suministro_idx ][ 'importeTotal' ] += $cantidad[ 'importe' ];
+            }
+        }
         return $resumen;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 /**
-* Marks routes for Kooben
+* Rutas para Marcas
 *
-* Created - Martin Samuel Esteban Diaz
+* @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 
 # get all marks

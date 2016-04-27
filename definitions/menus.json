@@ -1,0 +1,39 @@
+{
+    "IdMenu": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "IdEmbarcacion": {
+        "type": "INT",
+        "optional": true
+    },
+    "IdSession": {
+        "type": "INT",
+        "optional": true,
+        "allow_null": true
+    },
+    "CodigoMenu": {
+        "type": "STR"
+    },
+    "Comentarios": {
+        "type": "STR",
+        "optional": true,
+        "allow_null": true
+    },
+    "Desde": {
+        "type": "DATE"
+    },
+    "Hasta": {
+        "type": "DATE"
+    },
+    "Estado": {
+        "type": "ENUM",
+        "values": [
+            "Activo",
+            "Autorizado"
+        ],
+        "default": "Activo"
+    },
+    "__primary_key__": "IdMenu",
+    "__table_name__": "cmt_menu"
+}

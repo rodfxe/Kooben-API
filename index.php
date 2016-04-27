@@ -2,23 +2,25 @@
 /**
 * API para Kooben
 *
-* Iniciado el 2015-10-10 : 21:00:00 hrs
+* @started 2015-10-10|21:00:00 hrs
 * @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 
 
-/* Get the general configuration */
-$kooben = json_decode( file_get_contents( 'config.json' ) );
+# crear aplicación
+include 'kooben.php';
+$kooben = new Kooben();
 
-/* Import the core */
+# importar el nucleo
 include $kooben->core->query;
 include $kooben->core->model;
 
+# importar Slim
 require $kooben->core->slim;
 \Slim\Slim::registerAutoloader();
 
 
-/* Create the MySQL connection */
+# crear conexión a mysql
 $mysqlprofile = $kooben->config->mysql->profile;
 $mysqlparameters = $kooben->config->mysql->$mysqlprofile;
 
@@ -51,12 +53,12 @@ include $kooben->core->messages;
 include $kooben->core->upload;
 
 
-/* Instantiate a Slim application */
+# crear instancia de Slim
 $app = new \Slim\Slim();
 $app->response()->header( 'Content-Type', 'application/json' );
 $app->response()->header( 'Access-Control-Allow-Origin', '*' );
 
-// GET route for root
+# ruta de entrada
 $app->get( '/', function(){
     echo json_encode( [
         'Hello' => 'Welcome to Kooben API'
@@ -64,95 +66,83 @@ $app->get( '/', function(){
 });
 
 
-# Rutas para recipes
+# Rutas para recetas
 include $kooben->routes->recipes;
 
 
-# Rutas para recipes
+# Rutas para ingredientes
 include $kooben->routes->ingredients;
 
 
-# Rutas para sessions
+# Rutas para sesiones
 include $kooben->routes->sessions;
 
 
-# Rutas para accounts
+# Rutas para cuentas
 include $kooben->routes->accounts;
 
 
-# Rutas para supplies
+# Rutas para suministros
 include $kooben->routes->supplies;
 
 
-# Rutas para measures
+# Rutas para unidades
 include $kooben->routes->measures;
 
 
-# Rutas para supplies types
+# Rutas para tipos de suministros
 include $kooben->routes->suppliesTypes;
 
 
-# Rutas para providers
+# Rutas para proveedores
 include $kooben->routes->providers;
 
 
-# Rutas para marks
+# Rutas para marcas
 include $kooben->routes->marks;
 
 
-# Rutas para contries
+# Rutas para paises
 include $kooben->routes->countries;
 
 
-# Rutas para states
+# Rutas para estados
 include $kooben->routes->states;
 
 
-# Rutas para states
+# Rutas para ciudades/municipios
 include $kooben->routes->cities;
 
 
-# Rutas para states
+# Rutas para menus
 include $kooben->routes->menus;
 
 
-# Rutas para presentations
+# Rutas para presentaciones
 include $kooben->routes->presentations;
 
 
-# Rutas para prices of supplies
+# Rutas para precios de suministros
 include $kooben->routes->suppliesPrices;
 
 
-# Rutas para consults of prices
+# Rutas para consulta de precios
 include $kooben->routes->pricesConsults;
 
 
-# Rutas para period consumption
-include $kooben->routes->periodConsumption;
-
-
-# Rutas para registry consumption
-include $kooben->routes->registryConsumption;
-
-
-# Rutas para registry consumption data
-include $kooben->routes->registryConsumptionData;
-
-
-# Rutas para shoping list
+# Rutas para compras
 include $kooben->routes->shop;
 
 
-# Rutas para user addresses
+# Rutas para direcciones de entrega de usuarios
 include $kooben->routes->addresses;
 
 
-# Rutas para pleneacion
+# Rutas para compras
 include $kooben->routes->purchases;
 
 
-# Rutas para Shop Deliverers
+# Rutas para repartidores
 include $kooben->routes->shopDeliverers;
 
 

@@ -1,0 +1,37 @@
+{
+    "id": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "userId": {
+        "type": "INT"
+    },
+    "countryId": {
+        "type": "INT"
+    },
+    "fullname": {
+        "type": "STR"
+    },
+    "street": {
+        "type": "STR"
+    },
+    "number": {
+        "type": "STR",
+        "optional": true,
+        "allow_null": true
+    },
+    "state": {
+        "type": "STR"
+    },
+    "city": {
+        "type": "STR"
+    },
+    "code": {
+        "type": "INT"
+    },
+    "notes": {
+        "type": "STR"
+    },
+    "__table_name__": "shop_user_addresses",
+    "__primary_key__": "id"
+}

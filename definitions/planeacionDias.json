@@ -1,0 +1,14 @@
+{
+    "id": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "fecha": {
+        "type": "DATE"
+    },
+    "personas": {
+        "type": "INT"
+    },
+    "__primary_key__": "id",
+    "__table_name__": "cmt_planeaciondias"
+}

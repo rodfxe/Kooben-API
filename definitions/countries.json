@@ -1,0 +1,19 @@
+{
+    "idpais": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "codigopais": {
+        "type": "STR"
+    },
+    "titulopais": {
+        "type": "STR"
+    },
+    "Nacionalidad": {
+        "type": "STR"
+    },
+    "comentario": {
+        "type": "STR"
+    },
+    "__primary_key__": "idpais"
+}

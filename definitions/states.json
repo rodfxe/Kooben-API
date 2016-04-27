@@ -1,0 +1,19 @@
+{
+    "idestado": {
+        "type": "STR",
+        "auto_increment": true
+    },
+    "idpais": {
+        "type": "STR"
+    },
+    "codigoestado": {
+        "type": "STR"
+    },
+    "tituloestado": {
+        "type": "STR"
+    },
+    "descripcion": {
+        "type": "STR"
+    },
+    "__primary_key__": "idestado"
+}

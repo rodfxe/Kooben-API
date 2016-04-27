@@ -1,0 +1,33 @@
+{
+    "id": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "rowId": {
+        "type": "INT"
+    },
+    "sessionId": {
+        "type": "INT"
+    },
+    "tableName": {
+        "type": "STR"
+    },
+    "operation": {
+        "type": "ENUM",
+        "values": [
+            "insert",
+            "update",
+            "delete",
+            "physical-erased"
+        ],
+        "default": null
+    },
+    "affectedAt": {
+        "type": "DATETIME"
+    },
+    "active": {
+        "type": "BOOLEAN",
+        "default": true
+    },
+    "__primary_key__": "id"
+}

@@ -1,0 +1,15 @@
+{
+    "IdTipoInsumo": {
+        "type": "STR"
+    },
+    "CodigoTipoInsumo": {
+        "type": "STR"
+    },
+    "NombreTipoInsumo": {
+        "type": "STR"
+    },
+    "DescripcionTipoInsumo": {
+        "type": "STR"
+    },
+    "__primary_key__": "IdTipoInsumo"
+}

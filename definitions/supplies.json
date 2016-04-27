@@ -1,0 +1,37 @@
+{
+    "IdInsumo": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "IdTipoInsumo": {
+        "type": "INT"
+    },
+    "CodigoInsumo": {
+        "type": "STR"
+    },
+    "NombreInsumo": {
+        "type": "STR"
+    },
+    "DescripcionInsumo": {
+        "type": "STR"
+    },
+    "iIdUnidad": {
+        "type": "INT"
+    },
+    "Calorias": {
+        "type": "FLOAT"
+    },
+    "Proteinas": {
+        "type": "FLOAT"
+    },
+    "Grasas": {
+        "type": "FLOAT"
+    },
+    "HidratosCarbono": {
+        "type": "FLOAT"
+    },
+    "IndiceGlucemico": {
+        "type": "FLOAT"
+    },
+    "__primary_key__": "IdInsumo"
+}

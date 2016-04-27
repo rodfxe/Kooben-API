@@ -1,0 +1,13 @@
+{
+    "IdMarca": {
+        "type": "INT",
+        "auto_increment": true
+    },
+    "CodigoMarca": {
+        "type": "STR"
+    },
+    "TituloMarca": {
+        "type": "STR"
+    },
+    "__primary_key__": "IdMarca"
+}
