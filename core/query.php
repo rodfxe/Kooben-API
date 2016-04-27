@@ -18,6 +18,11 @@
     {
         public $value; # represent the value of the param in the sql.
         public $type;  # it represents the value in sql if string will be 'value' if it is not value.
+        const TYPE_INT = PARAM_INT;
+        const TYPE_FLOAT = PARAM_INT;
+        const TYPE_STR = PARAM_STRING;
+        const TYPE_DATE = PARAM_STRING;
+        const TYPE_DATETIME = PARAM_STRING;
 
         function __construct( $value = -1, $type = PARAM_INT )
         {
@@ -98,6 +103,11 @@
         public $recordCount;    # number of rows.
         public $hasError;       # query executed with errors.
         public $errorMessage;   # error message.
+
+        const TYPE_SELECT = QUERY_SELECT;
+        const TYPE_INSERT = QUERY_INSERT;
+        const TYPE_UPDATE = QUERY_UPDATE;
+        const TYPE_DELETE = QUERY_DELETE;
 
         function __construct( &$mysql_connection, $type = QUERY_SELECT )
         {

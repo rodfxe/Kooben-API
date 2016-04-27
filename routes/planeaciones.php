@@ -70,6 +70,21 @@ $app->get( '/planeaciones/:planeacion/resumen', function( $planeacionId ) {
 
 
 /**
+ * Cotizacion de una planeación con base a la presentacion mas barata
+ *
+ * @param Int $planeacion Id de la planeación a buscar.
+ * @return KoobenResponse Planeación con días y recetas.
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
+$app->get( '/planeaciones/:planeacion/cotizacionV1', function( $planeacionId ) {
+    echo Planeacion::cotizacionV1( $planeacionId )->toJson();
+});
+
+
+
+
+
+/**
 * Crear una nueva planeación
 *
 * @return KoobenResponse Planeacion con sus días.

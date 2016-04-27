@@ -192,32 +192,32 @@
 				switch( $conf->type ){
 					case 'INT':
 						$this->$property = -1;
-						$this->_properties->$property->typeValue = PARAM_INT;
+						$this->_properties->$property->typeValue = QueryParamItem::TYPE_INT;
 						break;
 
 					case 'FLOAT':
 						$this->$property = 0.0;
-						$this->_properties->$property->typeValue = PARAM_INT;
+						$this->_properties->$property->typeValue = QueryParamItem::TYPE_INT;
 						break;
 
 					case 'DATETIME':
 					case 'DATE':
 						$this->$property = -1;
-						$this->_properties->$property->typeValue = PARAM_STRING;
+						$this->_properties->$property->typeValue = QueryParamItem::TYPE_STR;
 
 					case 'STR':
 						$this->$property = empty_str;
-						$this->_properties->$property->typeValue = PARAM_STRING;
+						$this->_properties->$property->typeValue = QueryParamItem::TYPE_STR;
 						break;
 
 					case 'BOOLEAN':
 						$this->$property = $conf->default;
-						$this->_properties->$property->typeValue = PARAM_STRING;
+						$this->_properties->$property->typeValue = QueryParamItem::TYPE_STR;
 						break;
 
 					case 'ENUM':
 						$this->$property = $conf->default;
-						$this->_properties->$property->typeValue = PARAM_STRING;
+						$this->_properties->$property->typeValue = QueryParamItem::TYPE_STR;
 						break;
 				}
 			}
@@ -262,7 +262,7 @@
 
 			$this->query->clear();
 			$this->query->setSql( $sql );
-			$this->query->setParam( $paramname, $id, ( $isNumeric ? PARAM_INT : PARAM_STRING ) );
+			$this->query->setParam( $paramname, $id, ( $isNumeric ? QueryParamItem::TYPE_INT : QueryParamItem::TYPE_STR ) );
 			$this->query->execQuery();
 
 			if( $this->query->hasError ){ $this->error = $this->query->errorMessage; }
@@ -418,7 +418,7 @@
 				$path = MODEL_SQL_PATH.$this->modelName.'/'.$queryname.'.sql';
 				$sql = file_get_contents( $path );
 
-				$this->query->type = QUERY_INSERT;
+				$this->query->type = Query::TYPE_INSERT;
 				$this->query->params->clear();
 				$this->query->setSql( $sql );
 				$this->setQueryValues();
@@ -474,7 +474,7 @@
 				$sqlItems .= '('; # open a new item.
 				
 				foreach ( $row as $field_idx => $fieldValue ){ # loop for fields.
-					if ( $Options['rules'][$field_idx] == PARAM_STRING ){
+					if ( $Options['rules'][$field_idx] == QueryParamItem::TYPE_STR ){
 						$sqlItems .= " '$fieldValue',";
 					} else {
 						$sqlItems .= ' ' . $fieldValue . ',';
@@ -493,7 +493,7 @@
 			$result = new StdModel();
 			$result->status = new PostModelStatus();
 
-			$query = new Query( $this->connection, QUERY_INSERT );
+			$query = new Query( $this->connection, Query::TYPE_INSERT );
 			$query->setSql( $sql );
 			$query->execQuery();
 			if ( $query->hasError ){ $result->error = $query->errorMessage; }
@@ -535,11 +535,11 @@
 			$sql = file_get_contents( $path );
 			$fieldId = $this->_properties->__primary_key__;
 
-			$this->query->type = QUERY_UPDATE;
+			$this->query->type = Query::TYPE_UPDATE;
 			$this->query->params->clear();
 			$this->query->setSql( $sql );
 			$this->setQueryValues();
-			$this->query->setParam( $fieldId, $this->$fieldId, PARAM_INT );
+			$this->query->setParam( $fieldId, $this->$fieldId, QueryParamItem::TYPE_INT );
 			#$sql = $this->getQuery();
 			$this->query->execQuery();
 
@@ -568,10 +568,10 @@
 			$path = MODEL_SQL_PATH.$this->modelName.'/'.$queryname.'.sql';
 			$sql = file_get_contents( $path );
 
-			$this->query->type = QUERY_DELETE;
+			$this->query->type = Query::TYPE_DELETE;
 			$this->query->setSql( $sql );
 			$this->query->params->clear();
-			$this->query->setParam( $this->_properties->__primary_key__, $this->id, PARAM_INT );
+			$this->query->setParam( $this->_properties->__primary_key__, $this->id, QueryParamItem::TYPE_INT );
 			$this->query->execQuery();
 			$status = new DeleteModelStatus( $this->query->affectedRows > 0 );
 
@@ -601,7 +601,7 @@
 			}
 
 			# create instance of Query class.
-			$query = new Query( $this->connection, QUERY_DELETE );
+			$query = new Query( $this->connection, Query::TYPE_DELETE );
 			$query->setSql( $this->getContentFromSQLFile( $this->getSQLPath() . $options['queryName'] ) );
 			$query->params = $options['params'];
 			$query->execQuery();
@@ -638,7 +638,7 @@
 			$pkField = $this->_properties->__primary_key__;
 			$query = new Query( $this->query->connection );
 			$query->setSql( file_get_contents( ( MODEL_SQL_PATH.$this->modelName.'/get.sql' ) ) );
-			$query->setParam( $pkField, $this->$pkField, PARAM_INT );
+			$query->setParam( $pkField, $this->$pkField, QueryParamItem::TYPE_INT );
 			$query->execQuery();
 			return ( $query->recordCount > 0 );
 		}
@@ -696,7 +696,7 @@
 		{
 			$this->_properties->$propertyName->type = $newType;
 			if ( $newType != 'INT' ){
-				$this->_properties->$propertyName->typeValue = PARAM_STRING;
+				$this->_properties->$propertyName->typeValue = QueryParamItem::TYPE_STR;
 			}
 			return $this;
 		}
