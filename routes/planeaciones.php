@@ -5,9 +5,6 @@
 * @author Martin Samuel Esteban Diaz
 */
 
-/* Importar modelos */
-include 'models/planeaciones.php';
-
 
 /**
 * Obtener las paneaciones del usuario
@@ -76,8 +73,8 @@ $app->get( '/planeaciones/:planeacion/resumen', function( $planeacionId ) {
  * @return KoobenResponse Planeación con días y recetas.
  * @author Martin Samuel Esteban Diaz <edmsamuel>
  */
-$app->get( '/planeaciones/:planeacion/cotizacionV1', function( $planeacionId ) {
-    echo Planeacion::cotizacionV1( $planeacionId )->toJson();
+$app->get( '/planeaciones/:planeacion/cotizacion/:tipo/:lat/:lng/:rng', function( $planeacionId, $tipo, $lat, $lng, $rng ) {
+	echo Planeacion::cotizacion( $planeacionId, $tipo, $lat, $lng, $rng )->toJson();
 });
 
 

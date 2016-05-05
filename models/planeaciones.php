@@ -102,10 +102,12 @@ class Planeacion extends Model
      * @return KoobenResponse Resultado de la planeación.
      * @author Martin Samuel Esteban Diaz <edmsamuel>
      */
-    public static function obtenerResumen( $planeacionId = -1 ) {
+    public static function obtenerResumen( $planeacionId = -1, $version, $lat, $lng, $rng, $unt ) {
         $dias = new PlaneacionDias();
         $recetas = new PlaneacionRecetas();
         $resumen = new KoobenResponse();
+
+        $proveedores = implode( ',', Geolocalizacion::listaProveedoresId( $lat, $lng, $rng, $unt ) );
 
         $resumen->dias = $dias->findBy([ 'params' => new QueryParams([
             'planeacion' => new QueryParamItem( $planeacionId )
@@ -114,13 +116,15 @@ class Planeacion extends Model
         $resumen->suministros = $recetas->findBy([
             'queryName' => 'get-suministros',
             'params' => new QueryParams([
-                'planeacion' => new QueryParamItem( $planeacionId )
+                'planeacion' => new QueryParamItem( $planeacionId ),
+                'filtrarPorCoordenadas' => new QueryParamItem( 1 ),
+                'proveedores' => new QueryParamItem( $proveedores )
             ])
         ]);
 
 
         $cantidades = $recetas->findBy([
-            'queryName' => 'get-resumen',
+            'queryName' => "get-resumen-$version",
             'params' => new QueryParams([
                 'planeacion' => new QueryParamItem( $planeacionId )
             ])
@@ -128,6 +132,10 @@ class Planeacion extends Model
 
         if ( !$resumen->suministros->status->found ) {
             echo createEmptyModelWithStatus('Get')->toJson(); return;
+        }
+
+        foreach ( $resumen->dias->items as $dia_idx => $dia ) {
+            $resumen->dias->items[ $dia_idx ][ 'total' ] = 0.0;
         }
 
         foreach ( $resumen->suministros->items as $suministro_idx => $suministro) {
@@ -146,14 +154,19 @@ class Planeacion extends Model
                             'val' => $cantidad[ 'cantidadSuministro' ],
                             'unidad' => $cantidad[ 'nombreUnidad' ],
                             'importe' => floatval( $cantidad[ 'importe' ] ),
-                        ] ); break;
+                            'diaId' => $cantidad[ 'diaId' ],
+                            'precioId' => $cantidad[ 'precioId' ]
+                        ] );
+                        $resumen->dias->items[ $dia_idx ][ 'total' ] += floatval( $cantidad[ 'importe' ] ); break;
                     }
                 }
 
                 if ( !$founded ){ array_push( $resumen->suministros->items[ $suministro_idx ][ 'cantidades' ], [
                     'val' => empty_str,
                     'unidad' => empty_str,
-                    'importe' => 0.0
+                    'importe' => 0.0,
+                    'diaId' => -1,
+                    'precioId' => -1
                 ] ); }
 
             }
@@ -169,16 +182,19 @@ class Planeacion extends Model
      * @param $planeacionId
      * @return KoobenResponse
      */
-    public static function cotizacionV1($planeacionId ) {
+    public static function cotizacion( $planeacionId, $tipo, $lat, $lng, $rng ) {
         global $mysql;
 
-        $resumen = self::obtenerResumen( $planeacionId );
+        $resumen = self::obtenerResumen( $planeacionId, $tipo, $lat, $lng, $rng, 'K' );
+        $resumen->total = 0.0;
         foreach ( $resumen->suministros->items as $suministro_idx => $suministro ) {
             $resumen->suministros->items[ $suministro_idx ][ 'importeTotal' ] = 0;
 
             foreach ( $suministro[ 'cantidades' ] as $cantidad_idx => $cantidad ) {
                 $resumen->suministros->items[ $suministro_idx ][ 'importeTotal' ] += $cantidad[ 'importe' ];
             }
+
+            $resumen->total += $resumen->suministros->items[ $suministro_idx ][ 'importeTotal' ];
         }
         return $resumen;
     }

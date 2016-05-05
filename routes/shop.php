@@ -5,8 +5,6 @@
 * @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 
-include 'models/shop.php';
-
 /**
  * Retorna una lista de productos mas cercanos a las coordenadas recibidas
  *

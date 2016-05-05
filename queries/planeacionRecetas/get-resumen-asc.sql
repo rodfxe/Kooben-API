@@ -2,21 +2,35 @@ select
   planeacion.id as planeacionId,
   suministro.IdInsumo as suministroId,
   dia.id as diaId,
-
-  suministro.NombreInsumo as nombreSuministro,
-  unidad.sNombre as nombreUnidad,
-  (  count( suministro.IdInsumo ) * ingrediente.cantidad ) as cantidadSuministro,
   ifnull( (
-    select precio.PrecioVenta
+    select precio.IdInsumoPrecio
     from cmt_insumoprecio as precio
     where
         precio.IdInsumo = suministro.IdInsumo and
         precio.Aplicacion <= dia.fecha
     order by
+        ( precio.IdInsumo = suministro.IdInsumo ) and
+        ( precio.Aplicacion <= dia.fecha ) and
+        ( :filtrarPorCoordenadas = -1 or precio.iIdEmpresa in ( :proveedores ) )
+    limit 1
+  ), -1 ) as precioId,
+
+  suministro.NombreInsumo as nombreSuministro,
+  unidad.sNombre as nombreUnidad,
+  ( count( suministro.IdInsumo ) * ingrediente.cantidad * if( dia.personas = 0, 1, dia.personas ) ) as cantidadSuministro,
+  ifnull( (
+    select precio.PrecioVenta
+    from cmt_insumoprecio as precio
+    where
+        ( precio.IdInsumo = suministro.IdInsumo ) and
+        ( precio.Aplicacion <= dia.fecha ) and
+        ( :filtrarPorCoordenadas = -1 or precio.iIdEmpresa in ( :proveedores ) )
+
+    order by
         precio.Aplicacion desc,
         precio.PrecioVenta asc
     limit 1
-  ), 0 ) *  (  count( suministro.IdInsumo ) * ingrediente.cantidad ) as importe
+  ), 0 ) *  ( count( suministro.IdInsumo ) * ingrediente.cantidad * if( dia.personas = 0, 1, dia.personas ) ) as importe
 
 from cmt_insumo as suministro
 

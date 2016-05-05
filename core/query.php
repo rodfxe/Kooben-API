@@ -356,14 +356,6 @@
         private function fetchAll()
         {
             if( !method_exists( $this->result, 'fetch_all' ) ){
-                # get list of fields
-                /*$fields = $this->result->fetch_fields();
-
-                foreach( $fields as $field ){
-
-                }
-                */
-
                 $rows = array();
                 $index = 0;
                 while( $row = $this->result->fetch_assoc( ) )

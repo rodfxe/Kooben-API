@@ -35,6 +35,7 @@ SELECT DISTINCT
   ins.IdTipoInsumo,
   u.sCodigo um,
   u.sNombre,
+  
   u_ins.sCodigo as umIngredient,
   u_ins.sNombre as sNombre_Insumo,
   tins.CodigoTipoInsumo sNombre_Insumo,

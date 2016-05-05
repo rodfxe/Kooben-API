@@ -62,7 +62,8 @@ $app->post( '/purchases', function() use( $app, $mysql, $kooben ) {
 	$session = checkKoobenSession( $app );
 	$response = createEmptyModelWithStatus( 'Post' );
 	$delivererId = -1;
-	$invalidItems = ( count( $app->request->post( 'items' ) ) == 0 );
+	$values = $app->request->post();
+	$invalidItems = ( count( $values[ 'items' ] ) == 0 );
 
 	if ( !$session->status->found ) { echo $response->toJson(); return; }
 	if ( $invalidItems ){ $response->status->validItems = false; echo $response->toJson(); return; }
@@ -87,8 +88,6 @@ $app->post( '/purchases', function() use( $app, $mysql, $kooben ) {
 	} else {
 		$response->status->delivererNotFound = true; echo $response->toJson(); return;
 	}
-
-	$values = $app->request->post();
 
 	$purchases = new Model( 'purchases', $mysql );
 	$purchases->setProperties( $kooben->models->purchases );

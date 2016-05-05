@@ -20,7 +20,12 @@ require $kooben->core->slim;
 \Slim\Slim::registerAutoloader();
 
 
-# crear conexión a mysql
+/*
+|--------------------------------------------------------------------------
+| MySQL
+|--------------------------------------------------------------------------
+|
+*/
 $mysqlprofile = $kooben->config->mysql->profile;
 $mysqlparameters = $kooben->config->mysql->$mysqlprofile;
 
@@ -34,11 +39,24 @@ $mysql = new mysqli(
 
 $mysql->set_charset( 'utf8' );
 
-/* Create kardex */
+
+/*
+|--------------------------------------------------------------------------
+| Application Models Required
+|--------------------------------------------------------------------------
+|
+| Las siguientes instancias de la clase Model no deben borrarse
+| ya que estás son implementadas en funciones genericas
+| descritas en `core/generics.php`.
+|
+*/
+
+
+# kardex
 $kardex = new Model( 'kardex', $mysql );
 $kardex->setProperties( $kooben->models->kardex );
 
-/* Create session */
+# sessiones
 $sessions = new Model( 'sessions', $mysql );
 $sessions->setProperties( $kooben->models->sessions );
 
@@ -58,95 +76,129 @@ $app = new \Slim\Slim();
 $app->response()->header( 'Content-Type', 'application/json' );
 $app->response()->header( 'Access-Control-Allow-Origin', '*' );
 
-# ruta de entrada
+
+/*
+|--------------------------------------------------------------------------
+| Application Models
+|--------------------------------------------------------------------------
+|
+| A partir de aquí se deben de incluir los modelos que se utilizarán
+| en las rutas.
+|
+*/
+
+# geolocalización
+include 'models/geolocalizacion.php';
+
+# proveedores
+include 'models/proveedores.php';
+
+# tienda
+include 'models/shop.php';
+
+# planeaciones
+include 'models/planeaciones.php';
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| A partir de aquí se deben de incluir las rutas que se desean que
+| Slim sobreescriba.
+|
+*/
+
+# principal
 $app->get( '/', function(){
     echo json_encode( [
         'Hello' => 'Welcome to Kooben API'
     ] );
 });
 
-
-# Rutas para recetas
+# recetas
 include $kooben->routes->recipes;
 
 
-# Rutas para ingredientes
+# ingredientes
 include $kooben->routes->ingredients;
 
 
-# Rutas para sesiones
+# sesiones
 include $kooben->routes->sessions;
 
 
-# Rutas para cuentas
+# cuentas
 include $kooben->routes->accounts;
 
 
-# Rutas para suministros
+# suministros
 include $kooben->routes->supplies;
 
 
-# Rutas para unidades
+# unidades
 include $kooben->routes->measures;
 
 
-# Rutas para tipos de suministros
+# tipos de suministros
 include $kooben->routes->suppliesTypes;
 
 
-# Rutas para proveedores
+# proveedores
 include $kooben->routes->providers;
 
 
-# Rutas para marcas
+# marcas
 include $kooben->routes->marks;
 
 
-# Rutas para paises
+# paises
 include $kooben->routes->countries;
 
 
-# Rutas para estados
+# estados
 include $kooben->routes->states;
 
 
-# Rutas para ciudades/municipios
+# ciudades/municipios
 include $kooben->routes->cities;
 
 
-# Rutas para menus
+# menus
 include $kooben->routes->menus;
 
 
-# Rutas para presentaciones
+# presentaciones
 include $kooben->routes->presentations;
 
 
-# Rutas para precios de suministros
+# precios de suministros
 include $kooben->routes->suppliesPrices;
 
 
-# Rutas para consulta de precios
+# consulta de precios
 include $kooben->routes->pricesConsults;
 
 
-# Rutas para compras
+# compras
 include $kooben->routes->shop;
 
 
-# Rutas para direcciones de entrega de usuarios
+# direcciones de entrega de usuarios
 include $kooben->routes->addresses;
 
 
-# Rutas para compras
+# compras
 include $kooben->routes->purchases;
 
 
-# Rutas para repartidores
+# repartidores
 include $kooben->routes->shopDeliverers;
 
 
-# Rutas para planeaciones
+# planeaciones
 include $kooben->routes->planeaciones;
 
 
