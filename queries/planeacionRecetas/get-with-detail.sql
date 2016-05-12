@@ -3,6 +3,7 @@ select
     receta.diaId,
     receta.recetaId,
     receta.periodo,
+    receta.personas,
     recetas.NombreReceta as name
 
 from cmt_planeacionrecetas as receta

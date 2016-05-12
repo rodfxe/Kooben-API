@@ -1,8 +1,8 @@
 <?php
 /**
-* Planning routes for Kooben
+* Rutas para la pagina de planeaciones
 *
-* @author Martin Samuel Esteban Diaz
+* @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 
 
@@ -10,6 +10,7 @@
 * Obtener las paneaciones del usuario
 *
 * @return Array lista de planeaciones
+* 
 * @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 $app->get( '/planeaciones', function() use ( $app ) {
@@ -27,13 +28,12 @@ $app->get( '/planeaciones', function() use ( $app ) {
 
 
 
-
-
 /**
 * Obtener una planeación especifica junto con sus días y recetas.
 *
 * @param Int $planeacion Id de la planeación a buscar.
 * @return KoobenResponse Planeación con días y recetas.
+* 
 * @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 $app->get( '/planeaciones/:planeacion', function( $id ) use ( $app ) {
@@ -49,13 +49,12 @@ $app->get( '/planeaciones/:planeacion', function( $id ) use ( $app ) {
 
 
 
-
-
 /**
 * Resumen de una planeación
 *
 * @param Int $planeacion Id de la planeación a buscar.
 * @return KoobenResponse Planeación con días y recetas.
+* 
 * @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 $app->get( '/planeaciones/:planeacion/resumen', function( $planeacionId ) {
@@ -64,13 +63,12 @@ $app->get( '/planeaciones/:planeacion/resumen', function( $planeacionId ) {
 
 
 
-
-
 /**
- * Cotizacion de una planeación con base a la presentacion mas barata
+ * Cotizacion de una planeación
  *
  * @param Int $planeacion Id de la planeación a buscar.
  * @return KoobenResponse Planeación con días y recetas.
+ * 
  * @author Martin Samuel Esteban Diaz <edmsamuel>
  */
 $app->get( '/planeaciones/:planeacion/cotizacion/:tipo/:lat/:lng/:rng', function( $planeacionId, $tipo, $lat, $lng, $rng ) {
@@ -78,6 +76,18 @@ $app->get( '/planeaciones/:planeacion/cotizacion/:tipo/:lat/:lng/:rng', function
 });
 
 
+
+/**
+ * Cotizacion de una planeación por un solo proveedor
+ *
+ * @param Int $planeacion Id de la planeación a buscar.
+ * @param Int $proveedor Id del proveedor
+ * @return KoobenResponse Planeación con días y recetas.
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
+$app->get( '/planeaciones/:planeacion/cotizacion/:tipo/proveedor/:proveedor', function( $planeacionId, $tipo, $proveedorId ) {
+	echo Planeacion::cotizacion( $planeacionId, $tipo, -1, -1, -1, $proveedorId )->toJson();
+});
 
 
 
@@ -124,8 +134,6 @@ $app->post( '/planeaciones', function() use ( $app ) {
 
 
 
-
-
 /**
 * Actualizar un día de una planeación.
 * Solo se puede actualizar la cantidad de personas del día.
@@ -148,8 +156,6 @@ $app->put( '/planeaciones/:planeacion/:dia', function( $planeacion, $diaId ) use
 
 
 
-
-
 /**
 * Asigna una receta para un día de una planeación
 *
@@ -169,6 +175,17 @@ $app->post( '/planeaciones/:planeacion/:dia/recetas', function( $planeacion, $di
 });
 
 
+
+/**
+ * Actualiza los datos de la asignacion de una receta a una planeación.
+ *
+ * @param $id int Id de asignación
+ * @return KoobenResponse Resultado de la operación
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+*/
+$app->put( '/planeacion/recetas/:asignacion', function( $id ) use ( $app ) {
+    echo Planeacion::actualizarReceta( $id, $app->request->post() )->toJson();
+});
 
 
 

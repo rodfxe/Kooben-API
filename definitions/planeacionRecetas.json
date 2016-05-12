@@ -3,15 +3,15 @@
         "type": "INT",
         "auto_increment": true
     },
-    "diaId": {
-        "type": "INT"
+    "diaId": { "type": "INT" },
+    "recetaId": { "type": "INT" },
+    "periodo": { "type": "INT" },
+    "personas": {
+        "type": "INT",
+        "optional": true,
+        "default": 0
     },
-    "recetaId": {
-        "type": "INT"
-    },
-    "periodo": {
-        "type": "INT"
-    },
+
     "__primary_key__": "id",
     "__table_name__": "cmt_planeacionrecetas"
 }

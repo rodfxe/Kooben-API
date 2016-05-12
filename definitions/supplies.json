@@ -33,5 +33,6 @@
     "IndiceGlucemico": {
         "type": "FLOAT"
     },
-    "__primary_key__": "IdInsumo"
+    "__primary_key__": "IdInsumo",
+    "__table_name__": "cmt_insumo"
 }

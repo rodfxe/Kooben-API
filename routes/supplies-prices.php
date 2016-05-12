@@ -2,7 +2,7 @@
 /**
 * Prices of supplies routes for Kooben
 *
-* Created - Martin Samuel Esteban Diaz
+* @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 
 # create a new price

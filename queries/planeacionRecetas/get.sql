@@ -2,7 +2,8 @@ select
     receta.id,
     receta.diaId,
     receta.recetaId,
-    receta.periodo
+    receta.periodo,
+    receta.personas
 
 from cmt_planeacionrecetas as receta
 

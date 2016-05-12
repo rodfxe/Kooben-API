@@ -9,5 +9,7 @@
     "TituloMarca": {
         "type": "STR"
     },
-    "__primary_key__": "IdMarca"
+
+    "__primary_key__": "IdMarca",
+    "__table_name__": "cmt_marca"
 }

@@ -35,11 +35,8 @@ class Tienda
         $sqlList = [];
 
         if ( $providerList->status->count > 0 ) {
-
             foreach ( $providerList->items as $provider_idx => $provider ) {
-
                 if ( ( !is_null( $provider[ 'latitude' ] ) ) && ( !is_null( $provider[ 'longitude' ] ) ) ) {
-
                     $target = [ 'lat' => $provider[ 'latitude' ], 'lon' => $provider[ 'longitude' ] ];
                     $provider[ 'distance' ] = getDistanceBetweenTwoLocations( $me, $target, $unit );
 
@@ -67,6 +64,7 @@ class Tienda
             if ( $productList->status->found ) {
                 $lista->status = $productList->status;
                 $lista->items = $productList->items;
+                $lista->proveedores = $sqlList;
             }
         }
 

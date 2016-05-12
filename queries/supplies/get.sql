@@ -36,8 +36,7 @@ WHERE
   ( :iIdUnidad = -1 or ins.iIdUnidad = :iIdUnidad ) and
   ( :sCodigo = -1 or u.sCodigo LIKE :sCodigo ) and
   ( :CodigoTipoInsumo = -1 or tins.CodigoTipoInsumo = :CodigoTipoInsumo ) and
-  ( ( :Activo = -1 and ins.Activo = "Si" ) or ins.Activo = :Activo )
+  ( ins.Activo = "Si" )
 
 ORDER BY
-  tins.NombreTipoInsumo,
-  IF( :Orden = -1, IF( :Orden = "Codigo", ins.CodigoInsumo, ins.NombreInsumo ), ins.NombreInsumo )
+  ins.NombreInsumo;

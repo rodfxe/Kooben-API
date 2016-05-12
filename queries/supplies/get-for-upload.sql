@@ -4,5 +4,8 @@ select
 
 from cmt_insumo as supply
 
+where
+	supply.Activo = 'Si'
+
 order by
 	supply.IdInsumo;

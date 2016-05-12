@@ -2,24 +2,8 @@ select
   planeacion.id as planeacionId,
   suministro.IdInsumo as suministroId,
   dia.id as diaId,
-  ifnull( (
+  @precioId := ifnull( (
     select precio.IdInsumoPrecio
-    from cmt_insumoprecio as precio
-    where
-        precio.IdInsumo = suministro.IdInsumo and
-        precio.Aplicacion <= dia.fecha
-    order by
-        ( precio.IdInsumo = suministro.IdInsumo ) and
-        ( precio.Aplicacion <= dia.fecha ) and
-        ( :filtrarPorCoordenadas = -1 or precio.iIdEmpresa in ( :proveedores ) )
-    limit 1
-  ), -1 ) as precioId,
-
-  suministro.NombreInsumo as nombreSuministro,
-  unidad.sNombre as nombreUnidad,
-  ( count( suministro.IdInsumo ) * ingrediente.cantidad * if( dia.personas = 0, 1, dia.personas ) ) as cantidadSuministro,
-  ifnull( (
-    select precio.PrecioVenta
     from cmt_insumoprecio as precio
     where
         ( precio.IdInsumo = suministro.IdInsumo ) and
@@ -29,8 +13,45 @@ select
     order by
         precio.Aplicacion desc,
         precio.PrecioVenta asc
+
     limit 1
-  ), 0 ) *  ( count( suministro.IdInsumo ) * ingrediente.cantidad * if( dia.personas = 0, 1, dia.personas ) ) as importe
+  ), -1 ) as precioId,
+
+  suministro.NombreInsumo as nombreSuministro,
+  unidad.sNombre as nombreUnidad,
+  dia.personas as diaPersonas,
+  ingrediente.Cantidad as cantidadIngrediente,
+
+  count( suministro.IdInsumo ) as countInsumo,
+
+  @cantidadRecetas := (
+    select
+      sum( receta2.personas )
+    from cmt_planeacionrecetas as receta2
+    where receta2.diaId = dia.id
+  ) as cantidadRecetas,
+
+  ( if( @cantidadRecetas = 0,
+    count( suministro.IdInsumo ) * ingrediente.cantidad * if( dia.personas = 0, 1, dia.personas ),
+    count( suministro.IdInsumo ) * ingrediente.cantidad * @cantidadRecetas
+  ) ) as cantidadSuministro,
+
+  if( @precioId > -1 ,(
+    select
+      precio.PrecioVenta
+    from cmt_insumoprecio as precio
+    where precio.IdInsumoPrecio = @precioId
+  ), 0 ) as precioValor/*,
+
+  ( ( if( @cantidadRecetas = 0,
+    count( suministro.IdInsumo ) * ingrediente.cantidad * if( dia.personas = 0, 1, dia.personas ),
+    count( suministro.IdInsumo ) * ingrediente.cantidad * @cantidadRecetas
+  ) ) * ( if( @precioId > -1 ,(
+    select
+      precio.PrecioVenta
+    from cmt_insumoprecio as precio
+    where precio.IdInsumoPrecio = @precioId
+  ), 0 ) ) ) as importe*/
 
 from cmt_insumo as suministro
 

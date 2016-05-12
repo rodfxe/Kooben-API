@@ -38,6 +38,7 @@
 	{
 		public $found;
 		public $valid;
+
 		function __construct( $found = false, $valid = false )
 		{
 			$this->found = $found;
@@ -337,15 +338,19 @@
 
 		public function findBy($Options)
 		{
+            global $kooben;
+
 			$options = array(
 				'params' => new QueryParams(),
 				'queryName' => 'get',
-				'devMode' => false
+				'devMode' => ( $kooben->config->mysql->profile != 'production' )
 			);
 
 			foreach ( $Options as $optionName => $optionValue ){
 				$options[ $optionName ] = $optionValue;
 			}
+
+			$options[ 'queryName' ] = str_replace( ' ', '-', $options[ 'queryName' ] );
 
 			$query = new Query( $this->connection );
 			$query->setSql( $this->getContentFromSQLFile( $this->getSQLPath() . $options['queryName'] ) );
@@ -530,6 +535,7 @@
 		# save|update the model in the database
 		public function save()
 		{
+            global $kooben;
 			$queryname = ( strlen( $this->queryname ) > 0 ? $this->queryname : 'put' );
 			$path = MODEL_SQL_PATH.$this->modelName.'/'.$queryname.'.sql';
 			$sql = file_get_contents( $path );
@@ -540,14 +546,18 @@
 			$this->query->setSql( $sql );
 			$this->setQueryValues();
 			$this->query->setParam( $fieldId, $this->$fieldId, QueryParamItem::TYPE_INT );
-			#$sql = $this->getQuery();
+			if ( $kooben->config->mysql->profile != 'production' ) {
+				$sql = $this->getQuery();
+			}
 			$this->query->execQuery();
 
 			$this->status = new PutModelStatus();
 			$this->status->updated = ( $this->query->affectedRows > 0 );
 			#$this->status->found = $this->recordExists( $this->$fieldId );
 			$this->status->found = $this->recordExists( $this->$fieldId );
-			#$this->status->sql = $sql;
+            if ( $kooben->config->mysql->profile != 'production' ) {
+                $this->status->dev = $sql;
+            }
 
 			if( $this->query->hasError ){ $this->status->msg = $this->query->errorMessage; }
 			if( $this->query->hasWarnings() ){ $this->status->messages = $this->query->getWarnings(); }

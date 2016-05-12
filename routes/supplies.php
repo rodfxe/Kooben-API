@@ -5,7 +5,13 @@
 * @author Martin Samuel Esteban Diaz <edmsamuel>
 */
 
-# get al supplies
+
+
+/**
+ * Obtiene la lista completa de todos los suministros
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+*/
 $app->get( '/supplies', function() use( $mysql, $kooben ){
 	$supplies = new Model( 'supplies', $mysql );
 	$supplies->setProperties( $kooben->models->supplies );
@@ -14,7 +20,12 @@ $app->get( '/supplies', function() use( $mysql, $kooben ){
 });
 
 
-# get al supplies for upload image
+
+/**
+ * Obtiene una lista ligera de los productos para la pagina de upload
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
 $app->get( '/supplies-for-upload', function() use( $mysql, $kooben ){
 	$supplies = new Model( 'supplies', $mysql );
 	$supplies->setProperties( $kooben->models->supplies );
@@ -23,7 +34,13 @@ $app->get( '/supplies-for-upload', function() use( $mysql, $kooben ){
 	echo $supplies->findAll()->toJson();
 });
 
-# get supplies minified
+
+
+/**
+ * Obtiene la lista ligera de productos
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
 $app->get( '/supplies/light', function() use( $mysql, $kooben ){
 	$supplies = new Model( 'supplies', $mysql );
 	$supplies->setProperties( $kooben->models->supplies );
@@ -34,16 +51,11 @@ $app->get( '/supplies/light', function() use( $mysql, $kooben ){
 
 
 
-
-
-
-
-
-
-
-
-
-# create a new supplie
+/**
+ * Crea un nuevo producto
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
 $app->post( '/supplies', function() use( $app, $mysql, $kooben, $sessions, $kardex ){
 	$session = checkKoobenSession( $app );
 	if( !$session->status->found ){
@@ -80,13 +92,11 @@ $app->post( '/supplies', function() use( $app, $mysql, $kooben, $sessions, $kard
 
 
 
-
-
-
-
-
-
-# delete an supply
+/**
+ * Elimina un producto
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
 $app->delete( 'supplies/:id', function($id) use($app, $mysql, $kooben){
 	$id = intval($id);
 	$session = checkKoobenSession( $app );
@@ -105,6 +115,11 @@ $app->delete( 'supplies/:id', function($id) use($app, $mysql, $kooben){
 
 
 
+/**
+ * Obtiene las marcas asignadas a un prdoucto
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
 $app->get( '/supplies/:id/marks', function( $id ) use( $mysql, $kooben ) {
 	$marks = new Model( 'suppliesMarks', $mysql );
 	$marks->setProperties( $kooben->models->suppliesMarks );
@@ -117,6 +132,12 @@ $app->get( '/supplies/:id/marks', function( $id ) use( $mysql, $kooben ) {
 });
 
 
+
+/**
+ * Obtiene las presentaciones asignadas a un producto
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
 $app->get( '/supplies/:supplyid/presentations', function( $supplyid ) use( $mysql, $kooben ) {
 	$presentations = new Model( 'presentations', $mysql );
 	$presentations->setProperties( $kooben->models->presentations );
@@ -129,6 +150,12 @@ $app->get( '/supplies/:supplyid/presentations', function( $supplyid ) use( $mysq
 });
 
 
+
+/**
+ * Carga una imagen de producto
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
 $app->post( '/supplies/:id/image', function( $id ) use ( $mysql, $kooben ) {
 	$image = new Upload( $_FILES[ 'file' ], [
         'rules' => [ 'image/jpeg', 'image/jpg' ],
@@ -147,4 +174,58 @@ $app->post( '/supplies/:id/image', function( $id ) use ( $mysql, $kooben ) {
 
 
 
+/**
+ * Obtiene los precios de un producto y marca
+ *
+ * @param $producto int Id de producto
+ * @param $marca int Id de marca
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
+$app->get( '/supplies/:producto/mark/:marca/prices', function( $producto, $marca = -1 ) {
+    echo Producto::precios( $producto, $marca )->toJson();
+});
+
+
+
+/**
+ * Asigna una marca a un producto
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
+$app->post( '/supplies-marks', function() use( $app ) {
+    $session = checkKoobenSession( $app );
+    if ( !$session->status->found ) {
+        echo createSessionInvalidResponse( 'Get' )->toJson();
+    } else {
+        $marca = Producto::asignarMarca( $app->request->post() );
+
+        if ( $marca->status->created ) {
+            saveInKoobenKardex( $marca->id, $session->id, $marca->tableName(), 'insert' );
+        }
+
+        echo $marca->toJson();
+    }
+});
+
+
+
+/**
+ * Crea un nuevo precio
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
+$app->post( '/prices', function() use( $app ) {
+    $session = checkKoobenSession( $app );
+    if ( !$session->status->found ) {
+        echo createSessionInvalidResponse( 'Get' )->toJson();
+    } else {
+        $precio = Producto::crearPrecio( $app->request->post() );
+
+        if ( $precio->status->created ) {
+            saveInKoobenKardex( $precio->id, $session->id, $precio->tableName(), 'insert' );
+        }
+
+        echo $precio->toJson();
+    }
+});
 ?>

@@ -3,26 +3,14 @@
         "type": "INT",
         "auto_increment": true
     },
-    "IdInsumo": {
-        "type": "INT"
-    },
-    "iIdEmpresa": {
-        "type": "INT"
-    },
-    "IdMarca": {
-        "type": "INT"
-    },
-    "IdPresentacion": {
-        "type": "INT"
-    },
-    "PrecioCompra": {
-        "type": "FLOAT"
-    },
-    "PrecioVenta": {
-        "type": "FLOAT"
-    },
-    "Aplicacion": {
-        "type": "DATE"
-    },
-    "__primary_key__": "IdInsumoPrecio"
+    "IdInsumo": { "type": "INT" },
+    "iIdEmpresa": { "type": "INT" },
+    "IdMarca": { "type": "INT" },
+    "IdPresentacion": { "type": "INT" },
+    "PrecioCompra": { "type": "FLOAT" },
+    "PrecioVenta": { "type": "FLOAT" },
+    "Aplicacion": { "type": "DATE" },
+
+    "__primary_key__": "IdInsumoPrecio",
+    "__table_name__": "cmt_insumoprecio"
 }

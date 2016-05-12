@@ -99,6 +99,8 @@ include 'models/shop.php';
 # planeaciones
 include 'models/planeaciones.php';
 
+# productos
+include 'models/productos.php';
 
 
 /*
@@ -200,6 +202,10 @@ include $kooben->routes->shopDeliverers;
 
 # planeaciones
 include $kooben->routes->planeaciones;
+
+
+# geolocalización
+include $kooben->routes->geolocation;
 
 
 # Run the Slim application

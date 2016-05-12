@@ -67,6 +67,7 @@ class Geolocalizacion
      * @param $rng float Rango de busqueda
      * @param $unt string Unidad de medida
      * @return array
+     *
      * @author Martin Samuel Esteban Diaz <edmsamuel>
      */
     public static function listaProveedoresId( $lat, $lng, $rng, $unt ) {
@@ -80,5 +81,27 @@ class Geolocalizacion
         }
 
         return $lista;
+    }
+
+
+    /**
+     * @param $producto Id de producto
+     * @param $proveedores Lista de id's de proveedores
+     * @return StdModel
+     *
+     * @author Martin Samuel Esteban Diaz <edmsamuel>
+     */
+    public static function marcasProducto($producto, $proveedores ) {
+        global $mysql;
+        $marcas = new Model( 'marks', $mysql );
+
+        return $marcas->findBy([
+            'queryName' => 'get-shop-marks',
+            'params' => new QueryParams([
+                'supply' => new QueryParamItem( $producto ),
+                'filterByProviders' => new QueryParamItem( 1 ),
+                'providers' => new QueryParamItem( $proveedores )
+            ])
+        ]);
     }
 }

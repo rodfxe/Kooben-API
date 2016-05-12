@@ -102,12 +102,14 @@ class Planeacion extends Model
      * @return KoobenResponse Resultado de la planeación.
      * @author Martin Samuel Esteban Diaz <edmsamuel>
      */
-    public static function obtenerResumen( $planeacionId = -1, $version, $lat, $lng, $rng, $unt ) {
+    public static function obtenerResumen( $planeacionId = -1, $version, $lat, $lng, $rng, $unt, $proveedor = -1 ) {
+        global $kooben;
         $dias = new PlaneacionDias();
         $recetas = new PlaneacionRecetas();
         $resumen = new KoobenResponse();
 
-        $proveedores = implode( ',', Geolocalizacion::listaProveedoresId( $lat, $lng, $rng, $unt ) );
+        $resumen->proveedores = ( $proveedor == -1 ? Geolocalizacion::listaProveedoresId( $lat, $lng, $rng, $unt ) : [ $proveedor ] );
+        $proveedores = implode( ',', $resumen->proveedores );
 
         $resumen->dias = $dias->findBy([ 'params' => new QueryParams([
             'planeacion' => new QueryParamItem( $planeacionId )
@@ -116,9 +118,7 @@ class Planeacion extends Model
         $resumen->suministros = $recetas->findBy([
             'queryName' => 'get-suministros',
             'params' => new QueryParams([
-                'planeacion' => new QueryParamItem( $planeacionId ),
-                'filtrarPorCoordenadas' => new QueryParamItem( 1 ),
-                'proveedores' => new QueryParamItem( $proveedores )
+                'planeacion' => new QueryParamItem( $planeacionId )
             ])
         ]);
 
@@ -126,7 +126,9 @@ class Planeacion extends Model
         $cantidades = $recetas->findBy([
             'queryName' => "get-resumen-$version",
             'params' => new QueryParams([
-                'planeacion' => new QueryParamItem( $planeacionId )
+                'planeacion' => new QueryParamItem( $planeacionId ),
+                'filtrarPorCoordenadas' => new QueryParamItem( 1 ),
+                'proveedores' => new QueryParamItem( $proveedores )
             ])
         ]);
 
@@ -136,6 +138,10 @@ class Planeacion extends Model
 
         foreach ( $resumen->dias->items as $dia_idx => $dia ) {
             $resumen->dias->items[ $dia_idx ][ 'total' ] = 0.0;
+        }
+
+        if ( $kooben->config->mysql->profile != 'production' ) {
+            $resumen->suministros->dev = $cantidades->dev;
         }
 
         foreach ( $resumen->suministros->items as $suministro_idx => $suministro) {
@@ -150,6 +156,7 @@ class Planeacion extends Model
 
                     if ( $cantidad[ 'suministroId' ] == $suministro[ 'id' ] && $cantidad[ 'diaId' ] == $dia[ 'id' ] ) {
                         $founded = true;
+                        $cantidad[ 'importe' ] = ( floatval( $cantidad[ 'cantidadSuministro' ] ) * floatval( $cantidad[ 'precioValor' ] ) );
                         array_push( $resumen->suministros->items[ $suministro_idx ][ 'cantidades' ], [
                             'val' => $cantidad[ 'cantidadSuministro' ],
                             'unidad' => $cantidad[ 'nombreUnidad' ],
@@ -182,10 +189,10 @@ class Planeacion extends Model
      * @param $planeacionId
      * @return KoobenResponse
      */
-    public static function cotizacion( $planeacionId, $tipo, $lat, $lng, $rng ) {
+    public static function cotizacion( $planeacionId, $tipo, $lat, $lng, $rng, $proveedor = -1 ) {
         global $mysql;
 
-        $resumen = self::obtenerResumen( $planeacionId, $tipo, $lat, $lng, $rng, 'K' );
+        $resumen = self::obtenerResumen( $planeacionId, $tipo, $lat, $lng, $rng, 'K', $proveedor );
         $resumen->total = 0.0;
         foreach ( $resumen->suministros->items as $suministro_idx => $suministro ) {
             $resumen->suministros->items[ $suministro_idx ][ 'importeTotal' ] = 0;
@@ -193,9 +200,34 @@ class Planeacion extends Model
             foreach ( $suministro[ 'cantidades' ] as $cantidad_idx => $cantidad ) {
                 $resumen->suministros->items[ $suministro_idx ][ 'importeTotal' ] += $cantidad[ 'importe' ];
             }
-
+            $resumen->suministros->items[ $suministro_idx ][ 'cotizado' ] = ( $resumen->suministros->items[ $suministro_idx ][ 'importeTotal' ] > 0 );
             $resumen->total += $resumen->suministros->items[ $suministro_idx ][ 'importeTotal' ];
         }
         return $resumen;
+    }
+
+
+    /**
+     * Actualiza los datos de una asignación de receta de una planeación.
+     *
+     * @param $id int Id de asignación
+     * @param $datos array Nuevos datos de la asignación
+     * @return KoobenResponse|void
+     *
+     * @author Martin Samuel Esteban Diaz <edmsamuel>
+     */
+    public static function actualizarReceta($id, $datos ) {
+        $recetas = new PlaneacionRecetas();
+        $receta = $recetas->findById( '__default__', $id );
+
+        $resultado = new KoobenResponse();
+
+        if ( !$receta->status->found ){
+            echo createEmptyModelWithStatus( 'Get' )->toJson(); return;
+        }
+
+        $receta->setValuesFromArray( $datos );
+        $resultado->status = $receta->save();
+        return $resultado;
     }
 }

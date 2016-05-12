@@ -267,7 +267,7 @@
                     $type = ( !is_numeric( $fieldValue ) ? 'STR' : 'INT' );
                     if( $type != 'STR' ){ $type = ( (strpos( $fieldValue, '.') !== FALSE) ? 'FLOAT' : 'INT' ); }
                     if( $type == 'STR' && array_search( $fieldValue, array( 'true', 'false' ) ) != FALSE ){ $type = 'BOOLEAN'; }
-                    
+
                     switch ( $type ) {
                         case 'FLOAT':
                             $this->rows[$row_idx][$field_idx] = number_format( floatval( $fieldValue ), 2 );

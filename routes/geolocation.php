@@ -1,17 +1,32 @@
 <?php
 /**
-* Consults for prices routes for Kooben
-* 
-* Created - Martin Samuel Esteban Diaz
-*/ 
+ * Rutas para geolocalización
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+*/
+
+
+/**
+ * @param $lat float Latitud
+ * @param $lng float Longitud
+ * @param $rng float Rango de busqueda
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
+$app->get( '/geolocation/proveedores/:lat/:lng/:rng', function($lat, $lng, $rng ) {
+    echo Geolocalizacion::proveedores( $lat, $lng, $rng, 'K' )->toJson();
+});
+
+
+/* ADAL */
 $app->get( '/user-geolocation/:latitude/:longitude/:kilometers', function( $latitude, $longitude,$kilometers) use($mysql, $kooben){
 	# create result
 	$result = new StdModel();
  
 	# model for geolocation
       
-	$geolocation_companies = new Model( 'enterprise', $mysql );
-	$geolocation_companies->setProperties( $kooben->models->enterprise);
+	$geolocation_companies = new Model( 'providers', $mysql );
+	$geolocation_companies->setProperties( $kooben->models->providers );
 	$geolocation_companies->useQuery( 'get-the-closest-companies' );
 	# filter for geolocation
 	$filter_geolocation_companies = new QueryParams();
@@ -99,6 +114,19 @@ $app->get( '/prices/best-pantry/compare/weeks/:country/:state/:city/:start/:end'
 	echo $result->toJson();
 });
 
+
+$app->get('/sessions/:latitude/:longitude', function($latitude, $longitude) use($mysql, $kooben) {
+    $sessions = new Model('sessions', $mysql);
+    $sessions->setProperties($kooben->models->sessions);
+    $sessions->useQuery('getAll'); 
+    
+    $filter_session = new QueryParams();
+    $filter_session->setParam('lat', $latitude, PARAM_STRING);
+    $filter_session->setParam('lng', $longitude, PARAM_STRING); 
+    $result = $sessions->find($filter_session);    
+  
+    echo $result->toJson();
+});
 
 
 ?>
