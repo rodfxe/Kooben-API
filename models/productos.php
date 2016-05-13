@@ -70,4 +70,46 @@ class Producto
 
         return $marcas->create();
     }
+
+
+    /**
+     * Elimina asignación de marca a producto
+     *
+     * @param $asignacion int Id de asignación
+     * @return KoobenResponse
+     *
+     * @author Martin Samuel Esteban Diaz <edmsamuel>
+     */
+    public static function eliminarMarca( $asignacion ) {
+        global $kooben;
+        global $mysql;
+
+        $resultado = new KoobenResponse();
+        $marcas = new Model( 'suppliesMarks', $mysql );
+        $marcas->setProperties( $kooben->models->suppliesMarks );
+        $resultado->status = $marcas->delete( $asignacion );
+
+        return $resultado;
+    }
+
+
+    /**
+     * Elimina un precio
+     *
+     * @param $precio int Id del precio
+     * @return KoobenResponse
+     *
+     * @author Martin Samuel Esteban Diaz <edmsamuel>
+     */
+    public static function eliminarPrecio( $precio ) {
+        global $kooben;
+        global $mysql;
+
+        $resultado = new KoobenResponse();
+        $precios = new Model( 'suppliesPrices', $mysql );
+        $precios->setProperties( $kooben->models->suppliesPrices );
+        $resultado->status = $precios->delete( $precio );
+
+        return $resultado;
+    }
 }

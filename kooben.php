@@ -30,4 +30,15 @@ class Kooben
             $this->models->$definition = json_decode( file_get_contents( "definitions/$definition.json" ) );
         }
     }
+
+
+    /**
+     * Retorna el nombre de tabla de un modelo
+     *
+     * @param $model
+     * @return string
+     */
+    public function getTableNameOf( $model ) {
+        return $this->models->$model->__table_name__;
+    }
 }

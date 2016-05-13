@@ -9,6 +9,7 @@ select
   precio.Aplicacion as aplicacion,
 
   proveedor.sNombreCorto as proveedorNombre,
+  marca.TituloMarca as marcaNombre,
   presentacion.TituloPresentacion as presentacionNombre
 
 from cmt_insumoprecio as precio

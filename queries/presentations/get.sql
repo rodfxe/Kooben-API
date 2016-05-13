@@ -3,6 +3,7 @@ SELECT
   pre.IdPresentacion as id,
   pre.CodigoPresentacion as code,
   pre.TituloPresentacion as title,
+  pre.TituloPresentacion as name,
   pre.iIdUnidad as measure,
   pre.Cantidad as cant,
   measure.sNombre as measurename,

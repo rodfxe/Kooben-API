@@ -1,6 +1,6 @@
 <?php
 /**
-* Rutas para suministros
+* Rutas para productos
 *
 * @author Martin Samuel Esteban Diaz <edmsamuel>
 */
@@ -223,6 +223,51 @@ $app->post( '/prices', function() use( $app ) {
 
         if ( $precio->status->created ) {
             saveInKoobenKardex( $precio->id, $session->id, $precio->tableName(), 'insert' );
+        }
+
+        echo $precio->toJson();
+    }
+});
+
+
+
+/**
+ * Elimina marca
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
+$app->delete( '/supplies-marks/:asignacion', function( $asignacion ) use( $app ) {
+    $session = checkKoobenSession( $app );
+    if ( !$session->status->found ) {
+        echo createSessionInvalidResponse( 'Delete' )->toJson();
+    } else {
+        $marca = Producto::eliminarMarca( $asignacion );
+
+        if ( $marca->status->deleted ) {
+            saveInKoobenKardex( $asignacion, $session->id, 'cmt_marcaxinsumo', 'delete' );
+        }
+
+        echo $marca->toJson();
+    }
+});
+
+
+
+/**
+ * Elimina precio
+ *
+ * @author Martin Samuel Esteban Diaz <edmsamuel>
+ */
+$app->delete( '/prices/:precio', function( $precioId ) use( $app, $kooben ) {
+    $session = checkKoobenSession( $app );
+
+    if ( !$session->status->found ) {
+        echo createSessionInvalidResponse( 'Delete' )->toJson();
+    } else {
+        $precio = Producto::eliminarPrecio( $precioId );
+
+        if ( $precio->status->deleted ) {
+            saveInKoobenKardex( $precioId, $session->id, $kooben->getTableNameOf( 'suppliesPrices' ), 'delete' );
         }
 
         echo $precio->toJson();
