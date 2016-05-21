@@ -1,57 +1,69 @@
 <?php
 /**
-* Recipes routes for Kooben
-*
-* Created - Martin Samuel Esteban Diaz
+| Rutas para recetas
+|
+| @author edmsamuel
 */
 
-# get all recipes.
-$app->get( '/recipes', function() use ( $app, $mysql, $kooben){
-    $recipes = new Model( 'recipes', $mysql );
-    $recipes->setProperties( $kooben->models->recipes );
-    echo $recipes->findAll()->toJson();
+/**
+ * /recipes
+ * Retorna la lista completa de las recetas.
+ * 
+ * @author edmsamuel
+ */
+$app->get( '/recipes', function(){
+	echo Receta::lista()->toJson();
 });
 
 
 
-
-
-
-# get an recipe.
-$app->get( '/recipes/:id', function($id) use ($mysql, $kooben){
-    $recipes = new Model( 'recipes', $mysql );
-    $recipes->setProperties( $kooben->models->recipes );
-    $recipes->useQuery( 'single' );
-    echo $recipes->findById( 'IdReceta', intval( $id ) )->toJson();
+/**
+ * /recipes/:id
+ * Retorna una receta.
+ * 
+ * @param $id int Id de receta
+ * @author edmsamuel
+ */
+$app->get( '/recipes/:id', function( $id ) {
+	echo Receta::byId( $id )->toJson();
 });
 
 
 
-
-
-
-# get ingredients of an recipe.
-$app->get( '/recipes/:id/ingredients', function($id) use ($mysql, $kooben){
-    $recipes = new Model( 'recipes', $mysql );
-    $recipes->setProperties( $kooben->models->ingredients );
-    $recipes->useQuery( 'ingredients' );
-    $filter = new QueryParams;
-    $filter->setParam( 'IdReceta', intval( $id ) );
-    echo $recipes->find( $filter )->toJson();
+/**
+ * /recipes/:id/ingredients
+ * Retorna la lista de ingredientes de una receta.
+ * 
+ * @param $id int Id de receta.
+ * @author edmsamuel
+ */
+$app->get( '/recipes/:id/ingredients', function( $id ) {
+	echo Receta::ingredientes( $id )->toJson();
 });
 
 
 
-
-
-# get recipes filtered.
-$app->get( '/recipes/filter/:keywords', function($keywords) use ($mysql, $kooben){
-    $recipes = new Model( 'recipes', $mysql );
-    $recipes->setProperties( $kooben->models->recipes );
-    $recipes->useQuery( 'filter' );
-    $filter = new QueryParams;
-    $filter->setParam( 'keywords', $keywords, PARAM_STRING );
-    echo $recipes->find( $filter )->toJson();
+/**
+ * /recipes/search/:keywords
+ * Retorna una lista de recetas filtrada.
+ * 
+ * @param $keywords Palabras a buscar.
+ * @author edmsamuel
+ */
+$app->get( '/recipes/search/:keywords', function( $keywords ) {
+	echo Receta::buscar( $keywords )->toJson();
 });
 
-?>
+
+
+/**
+ * /recetas/pagina/:page/:count
+ * Retorna una lista de recetas a partir de un id, y toma como limite una cantidad.
+ * 
+ * @param $from int A partir de que Id de receta se desea empezar a listar.
+ * @param $cantidad int Cantidad limite de filas a partir del $from.
+ * @author edmsamuel
+ */
+$app->get( '/recetas/paginar/:from/:count', function( $from, $cantidad ) {
+	echo Receta::pagina( $from, $cantidad )->toJson();
+});

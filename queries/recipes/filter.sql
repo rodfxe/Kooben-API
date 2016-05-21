@@ -23,10 +23,7 @@ WHERE
   ( :DescripcionReceta = -1 or rec.DescripcionReceta LIKE :DescripcionReceta) and 
   ( :CodigoTipoReceta = -1 or tpr.CodigoTipoReceta LIKE :CodigoTipoReceta) and 
   ( :NombreTipoReceta = -1 or tpr.NombreTipoReceta LIKE :NombreTipoReceta) and
-  ( :keywords <> -1 and (
-    ( rec.NombreReceta REGEXP replace( :keywords, ' ', '|' ) ) or
-    ( rec.PreparacionReceta REGEXP replace( :keywords, ' ', '|' ) )
-  ) )
+  ( :keywords <> -1 and ( ( rec.NombreReceta REGEXP replace( :keywords, ' ', '|' ) ) ) )
 
 ORDER BY
   tpr.Orden,

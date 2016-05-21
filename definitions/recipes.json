@@ -40,6 +40,7 @@
         ],
         "default": "Si"
     },
+
     "__primary_key__": "IdReceta",
     "__table_name__": "cmt_receta"
 }

@@ -102,6 +102,9 @@ include 'models/planeaciones.php';
 # productos
 include 'models/productos.php';
 
+# recetas
+include 'models/recetas.php';
+
 
 /*
 |--------------------------------------------------------------------------

@@ -7,7 +7,7 @@ SELECT DISTINCT
   rpd.iIdUnidad,
   ins.CodigoInsumo as code,
   ins.NombreInsumo as name,
-  ins.DescripcionInsumo supplyDescription
+  ins.DescripcionInsumo supplyDescription,
   ins.IndiceGlucemico, 
   ins.iIdUnidad as iIdUnidad_Insumo,
   ins.IdTipoInsumo,

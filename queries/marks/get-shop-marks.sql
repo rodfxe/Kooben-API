@@ -1,5 +1,5 @@
 select
-		mark.IdMarca as markId,
+	mark.IdMarca as markId,
     mark.TituloMarca as name
 
 from cmt_insumoprecio as price
@@ -16,7 +16,7 @@ where
 
 group by
 	price.IdInsumo,
-  price.IdMarca
+	price.IdMarca
 
 order by
 	price.IdInsumo,
