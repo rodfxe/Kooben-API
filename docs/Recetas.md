@@ -20,7 +20,7 @@ Ruteo para recetas
 	`@param` $keywords Palabras a buscar.
 
 
-`/recetas/pagina/:page/:count` -> Retorna una lista de recetas a partir de un id, y toma como limite una cantidad.
+`/recetas/paginar/:page/:count` -> Retorna una lista de recetas a partir de un id, y toma como limite una cantidad.
 
 	`@param` $from int A partir de que Id de receta se desea empezar a listar.
 	`@param` $cantidad int Cantidad limite de filas a partir del $from.
